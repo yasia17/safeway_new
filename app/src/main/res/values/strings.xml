@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">newAS</string>
+    <string name="Map_API_Key">AIzaSyBdBsNI11RNBv_mt0QywIXbRq491JzMQLI</string>
+    <color name="pink">#df5899</color>
+    <color name="Maya_Yellow">#F9CA00</color>
+</resources>

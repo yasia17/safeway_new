@@ -1,0 +1,62 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    //id 'com.google.gms.google-services'
+}
+
+android {
+    compileSdkVersion 31
+    buildToolsVersion "31.0.0"
+
+    defaultConfig {
+        applicationId "com.example.newas"
+        minSdkVersion 21
+        targetSdkVersion 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // Add this block to enable data binding
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.maps:google-maps-services:2.2.0'
+    implementation 'org.slf4j:slf4j-simple:1.7.25'
+
+
+
+    // ML Kit dependencies
+    //implementation 'com.google.mlkit:image-labeling:17.0.0'
+   // implementation 'com.google.mlkit:text-recognition:17.0.0'
+
+    // TensorFlow Lite dependencies
+    //implementation 'org.tensorflow:tensorflow-lite:2.8.0'
+
+    // Add other dependencies as needed for your project
+
+    // Use this dependency to use the dynamically downloaded model in Google Play Services
+    implementation 'com.google.android.gms:play-services-mlkit-face-detection:17.1.0'
+    implementation 'com.google.firebase:firebase-auth:21.0.3'
+    implementation 'com.google.firebase:firebase-database:20.0.4'
+}

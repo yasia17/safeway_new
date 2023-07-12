@@ -1,0 +1,18 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        google()
+        jcenter()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+    }
+}
+rootProject.name = "newAS"
+include ':app'

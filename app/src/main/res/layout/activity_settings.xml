@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Settings">
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/MainBgColor_Darker"
+        android:gravity="center"
+        android:textSize="60dp"
+        android:layout_weight="1"
+        android:text="Settings to be made" />
+
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:background="@drawable/navbar_layout"
+        android:gravity="center"
+        android:minHeight="85dp">
+
+        <ImageButton
+            android:id="@+id/SettingsBtn"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/selected"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/settings" />
+
+        <ImageButton
+            android:id="@+id/NavBtn"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/not_selected"
+            android:padding="1dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/nav_icon" />
+
+        <ImageButton
+            android:id="@+id/ProfileBtn"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/not_selected"
+            android:padding="1dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/profile_pic" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

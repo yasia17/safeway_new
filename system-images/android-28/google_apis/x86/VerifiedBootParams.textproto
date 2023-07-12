@@ -1,0 +1,24 @@
+# dm="1 vroot none ro 1,0 5159992 verity 1 PARTUUID=CCBCABD5-6445-412D-A10F-2F74DBBACCD1 PARTUUID=CCBCABD5-6445-412D-A10F-2F74DBBACCD1 4096 4096 644999 644999 sha1 0011390ef3aa44087ea27d0e16a4107410518496 7e1037d90feb2438fcc16ac51c9aca000bcf6746 1 ignore_zero_blocks" androidboot.veritymode=enforcing root=/dev/dm-0
+major_version: 1
+dm_param: "1"
+dm_param: "vroot"  # name
+dm_param: "none"  # UUID
+dm_param: "ro"  # Read-only
+dm_param: "1,0"  # Start block
+dm_param: "5159992"  # Sector count
+dm_param: "verity"  # Type
+dm_param: "1"  # Version
+dm_param: "PARTUUID=CCBCABD5-6445-412D-A10F-2F74DBBACCD1"  # Data device
+dm_param: "PARTUUID=CCBCABD5-6445-412D-A10F-2F74DBBACCD1"  # Hash device
+dm_param: "4096"  # Data block size
+dm_param: "4096"  # Hash block size
+dm_param: "644999"  # Number of blocks
+dm_param: "644999"  # Hash block offset
+dm_param: "sha1"  # Hash algorithm
+dm_param: "0011390ef3aa44087ea27d0e16a4107410518496"  # Root digest
+dm_param: "7e1037d90feb2438fcc16ac51c9aca000bcf6746"  # Salt
+dm_param: "1"  # Num ooptional params
+dm_param: "ignore_zero_blocks"
+param: "androidboot.veritymode=enforcing"
+param: "androidboot.verifiedbootstate=orange"
+param: "root=/dev/dm-0"
