@@ -66,6 +66,9 @@ public class SignUp extends AppCompatActivity {
                         PermissionHelper.requestLocationPermission(SignUp.this);
                     }
                 }
+                else{
+                    Toast.makeText(SignUp.this, "Sign Up Invalid", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -165,8 +168,8 @@ public class SignUp extends AppCompatActivity {
 
                             db.getReference("Users").child(uid).setValue(user);
 
-                            Intent i = new Intent(SignUp.this, Navigation.class);
-                            startActivity(i);
+                           Intent intent = new Intent(SignUp.this,Navigation.class);
+                           startActivity(intent);
                         } else {
                             Toast.makeText(SignUp.this, "Auth Failed", Toast.LENGTH_SHORT).show();
                         }
@@ -182,10 +185,10 @@ public class SignUp extends AppCompatActivity {
             case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     locationPermissionGranted = true;
-                    Intent intent = new Intent(SignUp.this, Navigation.class);
-                    startActivity(intent);
+                    // Do nothing here, the permission is granted
                 }
             }
         }
     }
+
 }

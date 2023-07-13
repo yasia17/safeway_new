@@ -8,7 +8,6 @@
     android:background="@color/MainBgColor"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,6 +46,16 @@
             android:contentDescription="Map view for displaying locations"
             />
 
+        <TextView
+            android:id="@+id/userCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:textSize="20dp"
+            android:text="count"
+            android:textColor="@android:color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -55,16 +64,32 @@
             android:layout_margin="10dp"
             android:layout_gravity="bottom|start">
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/HelpRequests"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/not_selected"
-                android:padding="6dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/help" />
+                <ImageButton
+                    android:id="@+id/HelpRequests"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/not_selected"
+                    android:padding="6dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/help" />
+
+                <TextView
+                    android:id="@+id/helpReqCounter"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/help_req_c"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/white" />
+            </RelativeLayout>
 
             <ImageButton
                 android:id="@+id/CallPolice"
@@ -75,11 +100,7 @@
                 android:padding="7dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/police" />
-
-
         </LinearLayout>
-
-
     </FrameLayout>
 
     <ListView
@@ -88,17 +109,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:visibility="gone" />
-
-    <!-- <Button
-         android:id="@+id/button"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:onClick="back"
-         android:padding="10dp"
-         android:layout_margin="5dp"
-         android:text="back"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toBottomOf="@+id/textView" /> -->
 
     <LinearLayout
         android:id="@+id/bottomLayout"
@@ -139,6 +149,5 @@
             android:src="@drawable/profile_pic" />
 
     </LinearLayout>
-
 
 </LinearLayout>
