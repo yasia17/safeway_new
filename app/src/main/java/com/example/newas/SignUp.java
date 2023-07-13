@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUp extends AppCompatActivity {
 
+    //hello
+
     EditText Fname;
     EditText Lname;
     EditText Email;
