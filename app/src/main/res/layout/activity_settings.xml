@@ -56,7 +56,6 @@
             android:background="@drawable/not_selected"
             android:padding="1dp"
             android:scaleType="fitCenter"
-            android:speakableText="button to go to profile"
             android:contentDescription="profile button"
             android:src="@drawable/profile_pic" />
 
