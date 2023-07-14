@@ -18,7 +18,7 @@
         <EditText
             android:id="@+id/Destination"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:ems="10"
             android:hint="Destination:"/>
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/white"
-            android:text="search" />
+            android:text="Request help" />
 
     </LinearLayout>
 
@@ -75,6 +75,7 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/not_selected"
                     android:padding="6dp"
+                    android:contentDescription="view help request button"
                     android:scaleType="fitCenter"
                     android:src="@drawable/help" />
 
@@ -98,6 +99,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/not_selected"
                 android:padding="7dp"
+                android:contentDescription="cal police button"
                 android:scaleType="fitCenter"
                 android:src="@drawable/police" />
         </LinearLayout>
@@ -109,7 +111,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:visibility="gone" />
-
     <LinearLayout
         android:id="@+id/bottomLayout"
         android:layout_width="match_parent"
@@ -125,6 +126,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/not_selected"
             android:padding="1dp"
+            android:contentDescription="settings button"
             android:scaleType="fitCenter"
             android:src="@drawable/settings" />
 
@@ -135,6 +137,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/selected"
             android:padding="1dp"
+            android:contentDescription="navigation button"
             android:scaleType="fitCenter"
             android:src="@drawable/nav_icon" />
 
@@ -146,8 +149,11 @@
             android:background="@drawable/not_selected"
             android:padding="1dp"
             android:scaleType="fitCenter"
+            android:speakableText="button to go to profile"
+            android:contentDescription="profile button"
             android:src="@drawable/profile_pic" />
 
     </LinearLayout>
+
 
 </LinearLayout>
