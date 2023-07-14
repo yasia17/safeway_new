@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "524891046331",
+    "project_id": "safewaymap",
+    "storage_bucket": "safewaymap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524891046331:android:fe076c5c0feb155737c49e",
+        "android_client_info": {
+          "package_name": "com.example.newas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "524891046331-k2kf5p3bt7t7nd968m5kbiv1nicnsg99.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1Hzmr4Tewus4rJ4M1h5GcVx4WMF3Z_WA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "524891046331-k2kf5p3bt7t7nd968m5kbiv1nicnsg99.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
