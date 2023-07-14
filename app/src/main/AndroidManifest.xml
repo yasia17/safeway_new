@@ -28,9 +28,6 @@
             android:name=".Profile"
             android:exported="false" />
         <activity
-            android:name=".Helped"
-            android:exported="false" />
-        <activity
             android:name=".Signed_in"
             android:exported="false" />
         <activity
