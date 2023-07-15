@@ -1,8 +1,7 @@
 package com.example.newas;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -10,6 +9,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,15 +17,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.newas.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,7 +35,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -43,6 +43,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.maps.DirectionsApiRequest;
@@ -51,15 +54,16 @@ import com.google.maps.PendingResult;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.EncodedPolyline;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.concurrent.TimeUnit;
 
 public class Navigation extends AppCompatActivity implements OnMapReadyCallback {
+
+    private static final String TAG = "Navigation";
+    private static final long ACCEPTANCE_TIMEOUT = 300000; // 5 minutes
 
     private GoogleMap googleMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -67,20 +71,34 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
     private GeoApiContext geoApiContext = null;
     private LatLng userLatLng;
     private List<Polyline> polylines = new ArrayList<>();
+    private List<Marker> distressCallMarkers = new ArrayList<>();
 
     private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private FirebaseDatabase database;
+    private DatabaseReference distressCallsRef;
 
-    private FirebaseDatabase db;
-
-    private ArrayList<String> Addresses;
+    private ArrayList<String> addresses;
+    private Marker userMarker;
 
     private ListView distressCallListView;
-
     private ArrayAdapter<DistressCall> distressCallAdapter;
     private List<DistressCall> distressCalls = new ArrayList<>();
 
     private ImageButton helpRequestsButton;
     private TextView helpReqCounter;
+    private TextView userCountTextView;
+
+    private Marker destinationMarker;
+    private Marker meetingPointMarker;
+    private Polyline userRoutePolyline;
+    private Polyline accepterRoutePolyline;
+    private CountDownTimer acceptanceTimer;
+
+    private DistressCall currentDistressCall;
+    private boolean isUserAcceptingCall = false;
+
+    private boolean isPairingEnabled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,115 +109,136 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         destinationEditText = findViewById(R.id.Destination);
         Button searchButton = findViewById(R.id.Search);
 
-        ImageButton Settings = findViewById(R.id.SettingsBtn);
-        ImageButton Nav = findViewById(R.id.NavBtn);
-        ImageButton Profile = findViewById(R.id.ProfileBtn);
-        ImageButton Police = findViewById(R.id.CallPolice);
+        ImageButton settingsButton = findViewById(R.id.SettingsBtn);
+        ImageButton navButton = findViewById(R.id.NavBtn);
+        ImageButton profileButton = findViewById(R.id.ProfileBtn);
+        ImageButton callPoliceButton = findViewById(R.id.CallPolice);
         helpRequestsButton = findViewById(R.id.HelpRequests);
         helpReqCounter = findViewById(R.id.helpReqCounter);
+        userCountTextView = findViewById(R.id.userCountTextView);
 
         distressCallListView = findViewById(R.id.distressCallListView);
         distressCallAdapter = new ArrayAdapter<>(this, R.layout.list_item_distress_call);
         distressCallListView.setAdapter(distressCallAdapter);
 
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance();
-        db.getReference("Users").addValueEventListener(new ValueEventListener() {
+        currentUser = mAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance();
+        distressCallsRef = database.getReference("DistressCalls");
+
+        distressCallsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Addresses = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    User u = data.getValue(User.class);
-                    String address = u.getAddress();
-                    Addresses.add(address);
+                distressCalls.clear();
+                distressCallAdapter.clear();
 
-                    // Adding a marker for each address on the map
-                    LatLng latLng = getLocationFromAddress(address);
-                    if (latLng != null) {
-                        googleMap.addMarker(new MarkerOptions().position(latLng).title(address));
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    DistressCall distressCall = data.getValue(DistressCall.class);
+                    if (!distressCall.isAccepted()) {
+                        distressCalls.add(distressCall);
+                        distressCallAdapter.add(distressCall);
                     }
                 }
 
-                // Update the help requests count
                 updateHelpRequestsCount();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle the error if the retrieval is canceled or fails
+                Log.e(TAG, "Failed to read distress calls", error.toException());
             }
         });
 
-        Settings.setOnClickListener(new View.OnClickListener() {
+        settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Navigation.this, Settings.class);
-                startActivity(i);
+                Intent intent = new Intent(Navigation.this, Settings.class);
+                startActivity(intent);
             }
         });
 
-        Nav.setOnClickListener(new View.OnClickListener() {
+        navButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Navigation.this, Navigation.class);
-                startActivity(i);
+                // Do nothing, already in the Navigation activity
             }
         });
 
-        Profile.setOnClickListener(new View.OnClickListener() {
+        profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Navigation.this, Profile.class);
-                startActivity(i);
+                Intent intent = new Intent(Navigation.this, Profile.class);
+                startActivity(intent);
             }
         });
 
-        Police.setOnClickListener(new View.OnClickListener() {
+        callPoliceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(Navigation.this, "Call police", Toast.LENGTH_SHORT).show();
-                // Call police functionality
+                Toast.makeText(Navigation.this, "Calling the police...", Toast.LENGTH_SHORT).show();
+                // Implement your logic for calling the police
             }
         });
 
-        // Initialize the map
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
-        mapFragment.getMapAsync(this);
+        helpRequestsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (distressCallListView.getVisibility() == View.GONE) {
+                    distressCallListView.setVisibility(View.VISIBLE);
+                    helpRequestsButton.setImageResource(R.drawable.selected);
+                } else {
+                    distressCallListView.setVisibility(View.GONE);
+                    helpRequestsButton.setImageResource(R.drawable.not_selected);
+                }
+            }
+        });
 
-        if (geoApiContext == null) {
-            geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.Map_API_Key)).build();
-        }
+        distressCallListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                currentDistressCall = distressCallAdapter.getItem(position);
+                if (currentDistressCall != null) {
+                    if (!isUserAcceptingCall) {
+                        showAcceptCallDialog();
+                    } else {
+                        Toast.makeText(Navigation.this, "You are already accepting a call", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        distressCallListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                DistressCall distressCall = distressCallAdapter.getItem(position);
+                if (distressCall != null) {
+                    showCancelCallDialog(distressCall);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Clear the map and polylines
-                googleMap.clear();
-                polylines.clear();
-
-                // Get the destination entered by the user
                 String destination = destinationEditText.getText().toString().trim();
-
-                // Check if the destination is provided
                 if (!destination.isEmpty()) {
-                    // Get the location from the entered destination
-                    LatLng destinationLatLng = getLocationFromAddress(destination);
-
-                    if (destinationLatLng != null) {
-                        // Add a marker for the destination
-                        googleMap.addMarker(new MarkerOptions().position(destinationLatLng).title(destination));
-
-                        // Draw the route on the map
-                        drawRoute(userLatLng, destinationLatLng);
-
-                        // Zoom the map to show both the user's location and the destination
-                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                        builder.include(userLatLng);
-                        builder.include(destinationLatLng);
-                        LatLngBounds bounds = builder.build();
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 200));
-                    } else {
-                        Toast.makeText(Navigation.this, "Invalid destination address", Toast.LENGTH_SHORT).show();
+                    Geocoder geocoder = new Geocoder(Navigation.this);
+                    try {
+                        List<Address> addressList = geocoder.getFromLocationName(destination, 1);
+                        if (!addressList.isEmpty()) {
+                            Address address = addressList.get(0);
+                            LatLng destinationLatLng = new LatLng(address.getLatitude(), address.getLongitude());
+                            addDestinationMarker(destinationLatLng);
+                            showRouteToDestination(destinationLatLng);
+                            hideDistressCalls();
+                        } else {
+                            Toast.makeText(Navigation.this, "Destination not found", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (IOException e) {
+                        Log.e(TAG, "Geocoder exception: " + e.getMessage(), e);
+                        Toast.makeText(Navigation.this, "Failed to search for destination", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(Navigation.this, "Please enter a destination", Toast.LENGTH_SHORT).show();
@@ -207,127 +246,273 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             }
         });
 
-        helpRequestsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (distressCallListView.getVisibility() == View.VISIBLE) {
-                    distressCallListView.setVisibility(View.GONE);
-                } else {
-                    distressCallListView.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
+        supportMapFragment.getMapAsync(this);
 
-        distressCallListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Handle distress call item click event
-            }
-        });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // Check if the location permission is granted
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            // Request location updates
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-                @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    if (task.isSuccessful() && task.getResult() != null) {
-                        Location location = task.getResult();
-                        userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-                        // Add a marker for the user's location
-                        googleMap.addMarker(new MarkerOptions().position(userLatLng).title("You are here").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-
-                        // Move the camera to the user's location
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15));
-
-                        // Update the help requests count
-                        updateHelpRequestsCount();
-                    }
-                }
-            });
-        } else {
-            // Request location permission
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        fetchLastLocation();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        this.googleMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
-    private LatLng getLocationFromAddress(String address) {
-        Geocoder geocoder = new Geocoder(this);
-        List<Address> addresses;
-        LatLng latLng = null;
-        try {
-            addresses = geocoder.getFromLocationName(address, 1);
-            if (!addresses.isEmpty()) {
-                double latitude = addresses.get(0).getLatitude();
-                double longitude = addresses.get(0).getLongitude();
-                latLng = new LatLng(latitude, longitude);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void fetchLastLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
         }
-        return latLng;
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                if (task.isSuccessful()) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        moveCamera(userLatLng);
+                        addUserMarker(userLatLng);
+                        startDistressCallsCountdown();
+                    }
+                } else {
+                    Log.e(TAG, "Failed to get current location", task.getException());
+                    Toast.makeText(Navigation.this, "Failed to get current location", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
-    private void drawRoute(LatLng origin, LatLng destination) {
+    private void moveCamera(LatLng latLng) {
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+    }
+
+    private void addUserMarker(LatLng latLng) {
+        if (userMarker != null) {
+            userMarker.remove();
+        }
+
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(latLng)
+                .title("You are here")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+
+        userMarker = googleMap.addMarker(markerOptions);
+    }
+
+    private void addDestinationMarker(LatLng latLng) {
+        if (destinationMarker != null) {
+            destinationMarker.remove();
+        }
+        destinationMarker = googleMap.addMarker(new MarkerOptions()
+                .position(latLng)
+                .title("Destination")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+    }
+
+    private void showRouteToDestination(LatLng destinationLatLng) {
+        if (userLatLng == null) {
+            Toast.makeText(this, "Failed to get user location", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (geoApiContext == null) {
+            geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.Map_API_Key)).build();
+        }
         DirectionsApiRequest directionsApiRequest = new DirectionsApiRequest(geoApiContext);
-        directionsApiRequest.origin(new com.google.maps.model.LatLng(origin.latitude, origin.longitude));
-        directionsApiRequest.destination(new com.google.maps.model.LatLng(destination.latitude, destination.longitude));
+        directionsApiRequest.alternatives(false);
+        directionsApiRequest.origin(new com.google.maps.model.LatLng(userLatLng.latitude, userLatLng.longitude));
+        directionsApiRequest.destination(new com.google.maps.model.LatLng(destinationLatLng.latitude, destinationLatLng.longitude));
         directionsApiRequest.setCallback(new PendingResult.Callback<DirectionsResult>() {
             @Override
             public void onResult(DirectionsResult result) {
                 if (result.routes != null && result.routes.length > 0) {
                     DirectionsRoute route = result.routes[0];
-                    EncodedPolyline encodedPolyline = route.overviewPolyline;
-                    List<com.google.maps.model.LatLng> decodedPath = encodedPolyline.decodePath();
-
-                    // Clear existing polylines
-                    for (Polyline line : polylines) {
-                        line.remove();
-                    }
-                    polylines.clear();
-
-                    // Draw the new polyline
-                    PolylineOptions polylineOptions = new PolylineOptions();
-                    polylineOptions.color(Color.BLUE);
-                    polylineOptions.width(10);
-
-                    // Convert the List<LatLng> to an ArrayList<LatLng> using a traditional for loop
-                    ArrayList<LatLng> path = new ArrayList<>();
-                    for (com.google.maps.model.LatLng latLng : decodedPath) {
-                        path.add(new LatLng(latLng.lat, latLng.lng));
-                    }
-                    polylineOptions.addAll(path);
-
-                    Polyline polyline = googleMap.addPolyline(polylineOptions);
-                    polylines.add(polyline);
+                    addRoutePolyline(route.overviewPolyline);
                 }
             }
 
             @Override
             public void onFailure(Throwable e) {
-                Log.e(TAG, "onFailure: " + e.getMessage());
+                Log.e(TAG, "Failed to get directions: " + e.getMessage(), e);
+                Toast.makeText(Navigation.this, "Failed to get directions", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private void addRoutePolyline(EncodedPolyline polyline) {
+        List<com.google.maps.model.LatLng> decodedPath = polyline.decodePath();
+        List<com.google.android.gms.maps.model.LatLng> latLngList = new ArrayList<>();
+
+        for (com.google.maps.model.LatLng decodedLatLng : decodedPath) {
+            com.google.android.gms.maps.model.LatLng latLng = new com.google.android.gms.maps.model.LatLng(
+                    decodedLatLng.lat, decodedLatLng.lng);
+            latLngList.add(latLng);
+        }
+
+        PolylineOptions polylineOptions = new PolylineOptions()
+                .addAll(latLngList)
+                .color(Color.BLUE)
+                .width(10);
+        userRoutePolyline = googleMap.addPolyline(polylineOptions);
+    }
+
+
+    private void showAcceptCallDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Navigation.this);
+        builder.setTitle("Accept Distress Call");
+        builder.setMessage("Are you sure you want to accept this distress call?");
+        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                acceptCall();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void acceptCall() {
+        isUserAcceptingCall = true;
+        distressCallListView.setVisibility(View.GONE);
+        helpRequestsButton.setImageResource(R.drawable.not_selected);
+        distressCallAdapter.clear();
+        currentDistressCall.setAccepted(true);
+        distressCallsRef.child(currentDistressCall.getId()).setValue(currentDistressCall);
+        updateHelpRequestsCount();
+        startPairing();
+    }
+
+    private void startPairing() {
+        Toast.makeText(Navigation.this, "Pairing with the caller...", Toast.LENGTH_SHORT).show();
+        // Implement your logic for pairing with the caller
+        isPairingEnabled = true;
+        startAcceptanceTimer();
+    }
+
+    private void startAcceptanceTimer() {
+        acceptanceTimer = new CountDownTimer(ACCEPTANCE_TIMEOUT, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                // Update the timer display
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60;
+                String timerText = String.format("%02d:%02d", minutes, seconds);
+                showAcceptanceTimer(timerText);
+            }
+
+            @Override
+            public void onFinish() {
+                isPairingEnabled = false;
+                showNoUsersAvailableMessage();
+                // Implement your logic for connecting with SafeWay volunteers for a video call
+            }
+        }.start();
+    }
+
+    private void showAcceptanceTimer(String timerText) {
+        Toast.makeText(Navigation.this, "Acceptance timer: " + timerText, Toast.LENGTH_SHORT).show();
+        // Update the UI with the acceptance timer
+    }
+
+    private void showNoUsersAvailableMessage() {
+        Toast.makeText(Navigation.this, "Unfortunately, no users are available", Toast.LENGTH_SHORT).show();
+        // Implement your logic for connecting with SafeWay volunteers for a video call
+    }
+
+    private void showCancelCallDialog(DistressCall distressCall) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Navigation.this);
+        builder.setTitle("Cancel Distress Call");
+        builder.setMessage("Are you sure you want to cancel this distress call?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cancelCall(distressCall);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void cancelCall(DistressCall distressCall) {
+        distressCallsRef.child(distressCall.getId()).removeValue();
+        Toast.makeText(Navigation.this, "Distress call canceled", Toast.LENGTH_SHORT).show();
+    }
+
+    private void startDistressCallsCountdown() {
+        // Implement your logic to update the count of distress calls available within 2km radius
+    }
 
     private void updateHelpRequestsCount() {
-        if (Addresses != null) {
-            int helpRequestsCount = Addresses.size();
-            helpReqCounter.setText(String.valueOf(helpRequestsCount));
+        int distressCallCount = distressCalls.size();
+        helpReqCounter.setText(String.valueOf(distressCallCount));
+        // Implement your logic to update the user count in the radius
+    }
+
+    private void hideDistressCalls() {
+        distressCallListView.setVisibility(View.GONE);
+        helpRequestsButton.setImageResource(R.drawable.not_selected);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                fetchLastLocation();
+            } else {
+                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (googleMap != null) {
+            googleMap.clear();
+            if (userMarker != null) {
+                userMarker.remove();
+            }
+            if (destinationMarker != null) {
+                destinationMarker.remove();
+            }
+            if (meetingPointMarker != null) {
+                meetingPointMarker.remove();
+            }
+            if (userRoutePolyline != null) {
+                userRoutePolyline.remove();
+            }
+            if (accepterRoutePolyline != null) {
+                accepterRoutePolyline.remove();
+            }
+            if (!polylines.isEmpty()) {
+                for (Polyline polyline : polylines) {
+                    polyline.remove();
+                }
+                polylines.clear();
+            }
+            fetchLastLocation();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (acceptanceTimer != null) {
+            acceptanceTimer.cancel();
         }
     }
 }

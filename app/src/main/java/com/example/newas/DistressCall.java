@@ -1,17 +1,30 @@
 package com.example.newas;
+
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class DistressCall {
+    private String id;
     private String callerFirstName;
     private String callerLastName;
     private String origin;
     private String destination;
     private boolean isAccepted;
 
-    public DistressCall(String callerFirstName, String callerLastName, String origin, String destination, boolean isAccepted) {
+    public DistressCall() {
+    }
+
+    public DistressCall(String id, String callerFirstName, String callerLastName, String origin, String destination, boolean isAccepted) {
+        this.id = id;
         this.callerFirstName = callerFirstName;
         this.callerLastName = callerLastName;
         this.origin = origin;
         this.destination = destination;
         this.isAccepted = isAccepted;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getCallerFirstName() {
