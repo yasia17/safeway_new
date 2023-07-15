@@ -72,4 +72,13 @@ public class User {
     public void setPassword(String password) {
         Password = password;
     }
+
+    @Override
+    public String toString() {
+        return "com.example.myapplicationsasdas.User{" +
+                "name='" + FirstName + '\'' +
+                ", email='" + Email + '\'' +
+                ", password='" + Password + '\'' +
+                '}';
+    }
 }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
         Button signUp = findViewById(R.id.linkToSignUp);
 
         mAuth = FirebaseAuth.getInstance();
+
+
+        Log.d("main", "in main activity");
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,6 +9,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,20 +22,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUp extends AppCompatActivity {
-
-    //hello
-
-    EditText Fname;
-    EditText Lname;
-    EditText Email;
-    EditText Pass;
-    EditText Age;
-    EditText Address;
-
-    Button Submit;
+    private EditText Fname;
+    private EditText Lname;
+    private EditText Email;
+    private EditText Pass;
+    private EditText Age;
+    private EditText Address;
+    private Button Submit;
 
     private FirebaseAuth mAuth;
-
     private FirebaseDatabase db;
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 9003;
@@ -63,13 +59,14 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
                 if (CheckSignUp()) {
                     if (PermissionHelper.checkLocationPermission(SignUp.this)) {
-                        CreateUser(Email.getText().toString(),Pass.getText().toString());
+                        System.out.println("before create");
+                        Log.d("main", "before create signup");
+                        CreateUser(Email.getText().toString(), Pass.getText().toString());
+                        System.out.println("after create");
+                        Log.d("main", "after create signup");
                     } else {
                         PermissionHelper.requestLocationPermission(SignUp.this);
                     }
-                }
-                else{
-                    Toast.makeText(SignUp.this, "Sign Up Invalid", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -170,8 +167,12 @@ public class SignUp extends AppCompatActivity {
 
                             db.getReference("Users").child(uid).setValue(user);
 
-                           Intent intent = new Intent(SignUp.this,Navigation.class);
-                           startActivity(intent);
+                            System.out.println("here create user");
+
+                            Log.d("main", "on complete in create user");
+
+                            Intent I = new Intent(SignUp.this, Navigation.class);
+                            startActivity(I);
                         } else {
                             Toast.makeText(SignUp.this, "Auth Failed", Toast.LENGTH_SHORT).show();
                         }
@@ -187,10 +188,10 @@ public class SignUp extends AppCompatActivity {
             case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     locationPermissionGranted = true;
-                    // Do nothing here, the permission is granted
+                    Intent intent = new Intent(SignUp.this, Navigation.class);
+                    startActivity(intent);
                 }
             }
         }
     }
-
 }

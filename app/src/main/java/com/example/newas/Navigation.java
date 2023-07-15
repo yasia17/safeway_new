@@ -87,6 +87,9 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
+        System.out.println("navigation adfghj");
+        Log.d("main", "in navigation");
+
         // Get references to UI elements
         destinationEditText = findViewById(R.id.Destination);
         Button searchButton = findViewById(R.id.Search);
@@ -164,7 +167,10 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 
         // Initialize the map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
-        mapFragment.getMapAsync(this);
+        try {
+            mapFragment.getMapAsync(this); }
+        catch (Exception e) {
+        }
 
         if (geoApiContext == null) {
             geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.Map_API_Key)).build();
@@ -242,10 +248,13 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                         userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
                         // Add a marker for the user's location
-                        googleMap.addMarker(new MarkerOptions().position(userLatLng).title("You are here").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-
                         // Move the camera to the user's location
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15));
+                        try {
+                            googleMap.addMarker(new MarkerOptions().position(userLatLng).title("You are here").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15));}
+                        catch (Exception e) {}
+
+
 
                         // Update the help requests count
                         updateHelpRequestsCount();
