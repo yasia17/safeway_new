@@ -72,10 +72,13 @@
                     android:id="@+id/HelpRequests"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_margin="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/not_selected"
-                    android:padding="6dp"
                     android:contentDescription="view help request button"
+                    android:padding="6dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/help" />
 
@@ -99,7 +102,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/not_selected"
                 android:padding="7dp"
-                android:contentDescription="cal police button"
+                android:contentDescription="call police button"
                 android:scaleType="fitCenter"
                 android:src="@drawable/police" />
         </LinearLayout>
@@ -111,6 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/bottomLayout"
         android:layout_width="match_parent"
@@ -153,6 +157,4 @@
             android:src="@drawable/profile_pic" />
 
     </LinearLayout>
-
-
 </LinearLayout>
