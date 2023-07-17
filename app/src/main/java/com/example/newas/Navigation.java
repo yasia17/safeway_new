@@ -26,7 +26,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -106,6 +105,9 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
+        System.out.println("navigation adfghj");
+        Log.d("main", "in navigation");
+
         // Get references to UI elements
         destinationEditText = findViewById(R.id.Destination);
         Button searchButton = findViewById(R.id.Search);
@@ -182,9 +184,11 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         });
 
         // Initialize the map
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_container);
-        mapFragment.getMapAsync(this);
-
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
+        try {
+            mapFragment.getMapAsync(this); }
+        catch (Exception e) {
+        }
         helpRequestsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -251,7 +255,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             }
         });
 
-        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_container);
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
         supportMapFragment.getMapAsync(this);
 
         distressCallListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

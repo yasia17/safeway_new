@@ -37,14 +37,14 @@
         android:layout_width="match_parent"
         android:layout_height="576dp">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/map_container"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            tools:context=".Navigation"
-            tools:layout="@layout/activity_map" />
+            android:contentDescription="Map view for displaying locations"
+            />
 
         <TextView
             android:id="@+id/userCountTextView"
