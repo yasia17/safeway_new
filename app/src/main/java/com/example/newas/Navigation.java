@@ -190,10 +190,10 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             public void onClick(View view) {
                 if (distressCallListView.getVisibility() == View.GONE) {
                     distressCallListView.setVisibility(View.VISIBLE);
-                    helpRequestsButton.setImageResource(R.drawable.selected);
+                    //helpRequestsButton.setImageResource(R.drawable.selected);
                 } else {
                     distressCallListView.setVisibility(View.GONE);
-                    helpRequestsButton.setImageResource(R.drawable.not_selected);
+                    //helpRequestsButton.setImageResource(R.drawable.not_selected);
                 }
             }
         });
@@ -427,7 +427,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
     private void acceptCall() {
         isUserAcceptingCall = true;
         distressCallListView.setVisibility(View.GONE);
-        helpRequestsButton.setImageResource(R.drawable.not_selected);
+       // helpRequestsButton.setImageResource(R.drawable.not_selected);
         distressCallAdapter.clear();
         currentDistressCall.setAccepted(true);
         distressCallsRef.child(currentDistressCall.getId()).setValue(currentDistressCall);
@@ -509,7 +509,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 
     private void hideDistressCalls() {
         distressCallListView.setVisibility(View.GONE);
-        helpRequestsButton.setImageResource(R.drawable.not_selected);
+        //helpRequestsButton.setImageResource(R.drawable.not_selected);
     }
 
     @Override
