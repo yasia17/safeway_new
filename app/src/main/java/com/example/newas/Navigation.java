@@ -101,6 +101,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
     private boolean isPairingEnabled = false;
     private List<LatLng> userList;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,19 +129,10 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         distressCallsRef = database.getReference("DistressCalls");
 
         userList = new ArrayList<>(); // Initialize the user list with actual LatLng objects
-        userList.add(new LatLng(31.751546, 35.179309)); // User in the sample scenario
 
         double radius = 2.0; // Radius in kilometers
         int userCount = calculateUsersInRadius(radius);
         userCountTextView.setText(String.valueOf(userCount));
-
-        // Inside the onCreate method, after adding the user coordinates to the userList
-        LatLng meetingPointLatLng = new LatLng(31.750725, 35.178477); // Meeting point coordinates
-        LatLng destinationLatLng = new LatLng(31.749724, 35.174114); // Destination coordinates
-
-// Call the following methods to add markers and draw polylines for the meeting point and destination
-        addMeetingPointMarker(meetingPointLatLng);
-        showRouteToMeetingPoint(meetingPointLatLng, destinationLatLng);
 
 
         distressCallsRef.addValueEventListener(new ValueEventListener() {
@@ -228,6 +220,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                 }
             }
         });
+
 
         distressCallListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -631,11 +624,10 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             }
         }
     }
-
     private int calculateUsersInRadius(double radius) {
         int count = 0;
         for (LatLng userLatLng : userList) {
-            double distance = calculateDistance(userLatLng, userLatLng);
+            double distance = calculateDistance(userLatLng, userMarker.getPosition());
             if (distance <= radius) {
                 count++;
             }
@@ -643,57 +635,17 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         return count;
     }
 
-    private double calculateDistance(LatLng startLatLng, LatLng endLatLng) {
-        double lat1 = Math.toRadians(startLatLng.latitude);
-        double lon1 = Math.toRadians(startLatLng.longitude);
-        double lat2 = Math.toRadians(endLatLng.latitude);
-        double lon2 = Math.toRadians(endLatLng.longitude);
 
-        double dlon = lon2 - lon1;
-        double dlat = lat2 - lat1;
-
-        double a = Math.pow(Math.sin(dlat / 2), 2)
-                + Math.cos(lat1) * Math.cos(lat2)
-                * Math.pow(Math.sin(dlon / 2), 2);
-
-        double c = 2 * Math.asin(Math.sqrt(a));
-
-        double r = 6371;
-
-        return c * r;
-    }
-    // Method to add the meeting point marker
-    private void addMeetingPointMarker(LatLng meetingPointLatLng) {
-        if (meetingPointMarker != null) {
-            meetingPointMarker.remove();
-        }
-        meetingPointMarker = googleMap.addMarker(new MarkerOptions()
-                .position(meetingPointLatLng)
-                .title("Meeting Point")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-    }
-
-    // Method to draw polyline from the user location to the meeting point
-    private void showRouteToMeetingPoint(LatLng meetingPointLatLng, LatLng destinationLatLng) {
-        if (userLatLng == null) {
-            Toast.makeText(this, "Failed to get user location", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        List<LatLng> path = new ArrayList<>();
-        path.add(userLatLng);
-        path.add(meetingPointLatLng);
-        path.add(destinationLatLng);
-
-        if (userRoutePolyline != null) {
-            userRoutePolyline.remove();
-        }
-
-        PolylineOptions polylineOptions = new PolylineOptions()
-                .addAll(path)
-                .color(Color.BLUE)
-                .width(10);
-        userRoutePolyline = googleMap.addPolyline(polylineOptions);
+    private double calculateDistance(LatLng latLng1, LatLng latLng2) {
+        double earthRadius = 6371; // Earth's radius in kilometers
+        double latDiff = Math.toRadians(latLng2.latitude - latLng1.latitude);
+        double lngDiff = Math.toRadians(latLng2.longitude - latLng1.longitude);
+        double a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2)
+                + Math.cos(Math.toRadians(latLng1.latitude)) * Math.cos(Math.toRadians(latLng2.latitude))
+                * Math.sin(lngDiff / 2) * Math.sin(lngDiff / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = earthRadius * c;
+        return distance;
     }
 
 }
