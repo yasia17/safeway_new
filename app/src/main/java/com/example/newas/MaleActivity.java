@@ -18,7 +18,7 @@ public class MaleActivity extends AppCompatActivity {
     }    public void onBackButtonClick(View view) {
         // Handle the button click here
         // For example, you can return to the MainActivity
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity2.class);
         startActivity(intent);
     }
 }
