@@ -171,7 +171,7 @@ public class SignUp extends AppCompatActivity {
 
                             Log.d("main", "on complete in create user");
 
-                            Intent I = new Intent(SignUp.this, Navigation.class);
+                            Intent I = new Intent(SignUp.this, Home .class);
                             startActivity(I);
                         } else {
                             Toast.makeText(SignUp.this, "Auth Failed", Toast.LENGTH_SHORT).show();

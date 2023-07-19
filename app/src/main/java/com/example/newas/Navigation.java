@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -17,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +26,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -51,7 +50,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
-import com.google.maps.PendingResult;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.EncodedPolyline;
@@ -105,6 +103,8 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+
+        Log.d("main", "navigation");
 
         // Get references to UI elements
         destinationEditText = findViewById(R.id.Destination);
@@ -237,7 +237,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                             LatLng destinationLatLng = new LatLng(address.getLatitude(), address.getLongitude());
                             addDestinationMarker(destinationLatLng);
                             showRouteToDestination(destinationLatLng);
-                            hideDistressCalls();
+                            //hideDistressCalls();
                         } else {
                             Toast.makeText(Navigation.this, "Destination not found", Toast.LENGTH_SHORT).show();
                         }
@@ -279,12 +279,8 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 
                         // Add a marker for the user's location
                         // Move the camera to the user's location
-                        try {
-                            googleMap.addMarker(new MarkerOptions().position(userLatLng).title("You are here").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15));}
-                        catch (Exception e) {}
-
-
+                        addUserMarker(userLatLng);
+                        moveCamera(userLatLng);
 
                         // Update the help requests count
                         updateHelpRequestsCount();
@@ -364,26 +360,38 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         }
         if (geoApiContext == null) {
             geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.Map_API_Key)).build();
+        } else {
+            Toast.makeText(Navigation.this, "geoApiContext == null", Toast.LENGTH_SHORT).show();
         }
-        DirectionsApiRequest directionsApiRequest = new DirectionsApiRequest(geoApiContext);
-        directionsApiRequest.alternatives(false);
-        directionsApiRequest.origin(new com.google.maps.model.LatLng(userLatLng.latitude, userLatLng.longitude));
-        directionsApiRequest.destination(new com.google.maps.model.LatLng(destinationLatLng.latitude, destinationLatLng.longitude));
-        directionsApiRequest.setCallback(new PendingResult.Callback<DirectionsResult>() {
+
+        // Create an AsyncTask to perform the directions API request
+        AsyncTask<LatLng, Void, DirectionsResult> directionsTask = new AsyncTask<LatLng, Void, DirectionsResult>() {
             @Override
-            public void onResult(DirectionsResult result) {
-                if (result.routes != null && result.routes.length > 0) {
-                    DirectionsRoute route = result.routes[0];
-                    addRoutePolyline(route.overviewPolyline);
+            protected DirectionsResult doInBackground(LatLng... latLngs) {
+                DirectionsApiRequest directionsApiRequest = new DirectionsApiRequest(geoApiContext);
+                directionsApiRequest.alternatives(false);
+                directionsApiRequest.origin(new com.google.maps.model.LatLng(userLatLng.latitude, userLatLng.longitude));
+                directionsApiRequest.destination(new com.google.maps.model.LatLng(latLngs[0].latitude, latLngs[0].longitude));
+                try {
+                    return directionsApiRequest.await();
+                } catch (Exception e) {
+                    return null;
                 }
             }
 
             @Override
-            public void onFailure(Throwable e) {
-                Log.e(TAG, "Failed to get directions: " + e.getMessage(), e);
-                Toast.makeText(Navigation.this, "Failed to get directions", Toast.LENGTH_SHORT).show();
+            protected void onPostExecute(DirectionsResult directionsResult) {
+                if (directionsResult != null && directionsResult.routes != null && directionsResult.routes.length > 0) {
+                    DirectionsRoute route = directionsResult.routes[0];
+                    addRoutePolyline(route.overviewPolyline);
+                } else {
+                    Toast.makeText(Navigation.this, "Failed to get directions", Toast.LENGTH_SHORT).show();
+                }
             }
-        });
+        };
+
+        // Execute the AsyncTask
+        directionsTask.execute(destinationLatLng);
     }
 
     private void addRoutePolyline(EncodedPolyline polyline) {
@@ -427,7 +435,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
     private void acceptCall() {
         isUserAcceptingCall = true;
         distressCallListView.setVisibility(View.GONE);
-       // helpRequestsButton.setImageResource(R.drawable.not_selected);
+        // helpRequestsButton.setImageResource(R.drawable.not_selected);
         distressCallAdapter.clear();
         currentDistressCall.setAccepted(true);
         distressCallsRef.child(currentDistressCall.getId()).setValue(currentDistressCall);

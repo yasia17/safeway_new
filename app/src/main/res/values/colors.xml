@@ -20,4 +20,12 @@
     <color name="app_primary_color">#2979ff</color>
     <color name="app_secondary_color">#75a7ff</color>
     <color name="color_background">#F2E5E5</color>
+
+    <color name="light_sand">#f8ecde</color>
+    <color name="sand">#eadac1</color>
+    <color name="light_blue">#9ed2c6</color>
+    <color name="blue">#52bab9</color>
+
+    <color name="button_color">#FF4081</color>
+
 </resources>
