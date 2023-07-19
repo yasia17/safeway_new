@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -26,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -113,10 +115,10 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         ImageButton settingsButton = findViewById(R.id.SettingsBtn);
         ImageButton navButton = findViewById(R.id.NavBtn);
         ImageButton profileButton = findViewById(R.id.ProfileBtn);
-        ImageButton callPoliceButton = findViewById(R.id.CallPolice);
-        helpRequestsButton = findViewById(R.id.HelpRequests);
-        helpReqCounter = findViewById(R.id.helpReqCounter);
-        userCountTextView = findViewById(R.id.userCountTextView);
+//        ImageButton callPoliceButton = findViewById(R.id.CallPolice);
+//        helpRequestsButton = findViewById(R.id.HelpRequests);
+//        helpReqCounter = findViewById(R.id.helpReqCounter);
+//        userCountTextView = findViewById(R.id.userCountTextView);
 
         distressCallListView = findViewById(R.id.distressCallListView);
         distressCallAdapter = new ArrayAdapter<>(this, R.layout.list_item_distress_call);
@@ -173,30 +175,30 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             }
         });
 
-        callPoliceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Navigation.this, "Calling the police...", Toast.LENGTH_SHORT).show();
-                // Implement your logic for calling the police
-            }
-        });
+//        callPoliceButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(Navigation.this, "Calling the police...", Toast.LENGTH_SHORT).show();
+//                // Implement your logic for calling the police
+//            }
+//        });
 
         // Initialize the map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_container);
         mapFragment.getMapAsync(this);
 
-        helpRequestsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (distressCallListView.getVisibility() == View.GONE) {
-                    distressCallListView.setVisibility(View.VISIBLE);
-                    //helpRequestsButton.setImageResource(R.drawable.selected);
-                } else {
-                    distressCallListView.setVisibility(View.GONE);
-                    //helpRequestsButton.setImageResource(R.drawable.not_selected);
-                }
-            }
-        });
+//        helpRequestsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (distressCallListView.getVisibility() == View.GONE) {
+//                    distressCallListView.setVisibility(View.VISIBLE);
+//                    //helpRequestsButton.setImageResource(R.drawable.selected);
+//                } else {
+//                    distressCallListView.setVisibility(View.GONE);
+//                    //helpRequestsButton.setImageResource(R.drawable.not_selected);
+//                }
+//            }
+//        });
 
         distressCallListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -237,6 +239,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                             LatLng destinationLatLng = new LatLng(address.getLatitude(), address.getLongitude());
                             addDestinationMarker(destinationLatLng);
                             showRouteToDestination(destinationLatLng);
+                            showMeetingPoint();
                             //hideDistressCalls();
                         } else {
                             Toast.makeText(Navigation.this, "Destination not found", Toast.LENGTH_SHORT).show();
@@ -250,6 +253,9 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                 }
             }
         });
+
+
+
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_container);
         supportMapFragment.getMapAsync(this);
@@ -283,7 +289,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                         moveCamera(userLatLng);
 
                         // Update the help requests count
-                        updateHelpRequestsCount();
+                        //updateHelpRequestsCount();
                     }
                 }
             });
@@ -335,6 +341,10 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             userMarker.remove();
         }
 
+
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_custom_marker);
+
+
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLng)
                 .title("You are here")
@@ -383,7 +393,8 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             protected void onPostExecute(DirectionsResult directionsResult) {
                 if (directionsResult != null && directionsResult.routes != null && directionsResult.routes.length > 0) {
                     DirectionsRoute route = directionsResult.routes[0];
-                    addRoutePolyline(route.overviewPolyline);
+                    removeOldPolylines(); // Remove existing polylines from the map
+                    addRoutePolyline(route.overviewPolyline, route.legs[0].steps.length); // Pass the number of steps in the first leg of the route
                 } else {
                     Toast.makeText(Navigation.this, "Failed to get directions", Toast.LENGTH_SHORT).show();
                 }
@@ -394,22 +405,63 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         directionsTask.execute(destinationLatLng);
     }
 
-    private void addRoutePolyline(EncodedPolyline polyline) {
+    private void removeOldPolylines() {
+        for (Polyline polyline : polylines) {
+            polyline.remove();
+        }
+        polylines.clear();
+    }
+
+    private void addRoutePolyline(EncodedPolyline polyline, int numSteps) {
         List<com.google.maps.model.LatLng> decodedPath = polyline.decodePath();
         List<com.google.android.gms.maps.model.LatLng> latLngList = new ArrayList<>();
 
-        for (com.google.maps.model.LatLng decodedLatLng : decodedPath) {
-            com.google.android.gms.maps.model.LatLng latLng = new com.google.android.gms.maps.model.LatLng(
-                    decodedLatLng.lat, decodedLatLng.lng);
+        int numPoints = decodedPath.size();
+        int quarterPoint = numPoints / 4; // Find the quarter point of the route
+
+        for (int i = 0; i < numPoints; i++) {
+            com.google.maps.model.LatLng decodedLatLng = decodedPath.get(i);
+            com.google.android.gms.maps.model.LatLng latLng = new com.google.android.gms.maps.model.LatLng(decodedLatLng.lat, decodedLatLng.lng);
             latLngList.add(latLng);
+
+            if (i == quarterPoint) {
+                // Add meeting point marker at the quarter point of the route
+                showMeetingPoint(latLng);
+            }
+
+            // Set the color based on whether the point is before or after the quarter point
+            int color;
+            if (i < quarterPoint) {
+                color = Color.RED; // Red color for points before the quarter point
+            } else {
+                color = Color.BLUE; // Blue color for points after the quarter point
+            }
+
+            if (i > 0) {
+                // Draw a polyline segment between consecutive points with the specified color
+                PolylineOptions polylineOptions = new PolylineOptions()
+                        .add(latLngList.get(i - 1), latLngList.get(i))
+                        .color(color)
+                        .width(10);
+                Polyline segmentPolyline = googleMap.addPolyline(polylineOptions);
+                polylines.add(segmentPolyline);
+            }
         }
 
-        PolylineOptions polylineOptions = new PolylineOptions()
-                .addAll(latLngList)
-                .color(Color.BLUE)
-                .width(10);
-        userRoutePolyline = googleMap.addPolyline(polylineOptions);
+        userRoutePolyline = googleMap.addPolyline(new PolylineOptions().addAll(latLngList).color(Color.TRANSPARENT)); // Transparent polyline for the overall route
     }
+
+    private void showMeetingPoint(LatLng latLng) {
+        if (meetingPointMarker != null) {
+            meetingPointMarker.remove();
+        }
+        meetingPointMarker = googleMap.addMarker(new MarkerOptions()
+                .position(latLng)
+                .title("Meeting Point")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+    }
+
+
 
 
     private void showAcceptCallDialog() {
@@ -511,7 +563,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 
     private void updateHelpRequestsCount() {
         int distressCallCount = distressCalls.size();
-        helpReqCounter.setText(String.valueOf(distressCallCount));
+//        helpReqCounter.setText(String.valueOf(distressCallCount));
         // Implement your logic to update the user count in the radius
     }
 
@@ -569,4 +621,23 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             acceptanceTimer.cancel();
         }
     }
+    private void showMeetingPoint() {
+        if (userLatLng != null && destinationMarker != null) {
+            double meetingPointLatitude = (userLatLng.latitude + destinationMarker.getPosition().latitude) / 2;
+            double meetingPointLongitude = (userLatLng.longitude + destinationMarker.getPosition().longitude) / 2;
+            LatLng meetingPointLatLng = new LatLng(meetingPointLatitude, meetingPointLongitude);
+            addMeetingPointMarker(meetingPointLatLng);
+        }
+    }
+
+    private void addMeetingPointMarker(LatLng latLng) {
+        if (meetingPointMarker != null) {
+            meetingPointMarker.remove();
+        }
+        meetingPointMarker = googleMap.addMarker(new MarkerOptions()
+                .position(latLng)
+                .title("Meeting Point")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+    }
+
 }

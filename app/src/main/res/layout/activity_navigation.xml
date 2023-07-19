@@ -46,7 +46,7 @@
             tools:context=".Navigation"
             tools:layout="@layout/activity_map" />
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/userCountTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:layout_alignParentTop="true"
             android:textSize="20dp"
             android:text="count"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black" />-->
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <ImageButton
+               <!-- <ImageButton
                     android:id="@+id/HelpRequests"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
@@ -92,10 +92,10 @@
                     android:gravity="center"
                     android:text="0"
                     android:textSize="20sp"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white" />-->
             </RelativeLayout>
 
-            <ImageButton
+            <!--<ImageButton
                 android:id="@+id/CallPolice"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -104,7 +104,7 @@
                 android:padding="7dp"
                 android:contentDescription="call police button"
                 android:scaleType="fitCenter"
-                android:src="@drawable/police" />
+                android:src="@drawable/police" />-->
         </LinearLayout>
     </FrameLayout>
 
