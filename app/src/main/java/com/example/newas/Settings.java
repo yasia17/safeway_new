@@ -8,23 +8,28 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
 
 public class Settings extends AppCompatActivity {
 
     private TextView textview;
+    private ImageButton settings;
+    private ImageButton nav;
+    private ImageButton profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Button Settings = findViewById(R.id.SettingsBtn);
-        Button Nav = findViewById(R.id.NavBtn);
-        Button Profile = findViewById(R.id.ProfileBtn);
+        settings = findViewById(R.id.SettingsBtn);
+        nav = findViewById(R.id.NavBtn);
+        profile = findViewById(R.id.ProfileBtn);
 
 
-        Settings.setOnClickListener(new View.OnClickListener() {
+        settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Settings.this, Settings.class);
@@ -32,7 +37,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        Nav.setOnClickListener(new View.OnClickListener() {
+        nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Settings.this, Home.class);
@@ -40,7 +45,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        Profile.setOnClickListener(new View.OnClickListener() {
+        profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Settings.this, Profile.class);

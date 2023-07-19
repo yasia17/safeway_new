@@ -47,7 +47,7 @@ public class Profile extends AppCompatActivity {
         Nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Profile.this,Navigation.class);
+                Intent i = new Intent(Profile.this,Home.class);
                 startActivity(i);
             }
         });

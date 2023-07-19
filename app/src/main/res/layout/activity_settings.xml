@@ -13,68 +13,62 @@ android:background="@color/light_sand">
     android:id="@+id/hellotxt"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Hello" />
+    android:text="Hello here are settings" />
 
 
-<!--<LinearLayout-->
-<!--    android:id="@+id/bottomLayout"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="85dp"-->
-<!--    android:background="@drawable/navbar_layout"-->
-<!--    android:gravity="center"-->
-<!--    android:minHeight="85dp">-->
-<!--    &lt;!&ndash; filler &ndash;&gt;-->
-<!--    <View-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_weight="1" />-->
+<LinearLayout
+    android:id="@+id/bottomLayout"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:background="@drawable/navbar_layout"
+    android:gravity="center"
+    android:minHeight="85dp">
+    <!-- filler -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1" />
 
-<!--    <Button-->
-<!--        android:id="@+id/SettingsBtn"-->
-<!--        android:layout_width="80dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:layout_weight="0"-->
-<!--        android:background="@drawable/settings" />-->
-<!--    &lt;!&ndash; filler &ndash;&gt;-->
-<!--    <View-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_weight="1" />-->
+    <ImageButton
+        android:id="@+id/SettingsBtn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_weight="0"
+        android:background="@drawable/settings" />
+    <!-- filler -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1" />
 
-<!--    <Button-->
-<!--        android:id="@+id/NavBtn"-->
-<!--        android:layout_width="80dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:layout_weight="0"-->
-<!--        android:background="@drawable/home" />-->
-<!--    &lt;!&ndash; filler &ndash;&gt;-->
-<!--    <View-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_weight="1" />-->
-
-
-<!--    <Button-->
-<!--        android:id="@+id/ProfileBtn"-->
-<!--        android:layout_width="80dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:layout_weight="0"-->
-<!--        android:background="@drawable/profile" />-->
-<!--    &lt;!&ndash; filler &ndash;&gt;-->
-<!--    <View-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_weight="1" />-->
-
-<!--</LinearLayout>-->
+    <ImageButton
+        android:id="@+id/NavBtn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_weight="0"
+        android:background="@drawable/home2" />
+    <!-- filler -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1" />
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:menu="@menu/bottom_navigation_menu" />
+    <ImageButton
+        android:id="@+id/ProfileBtn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_weight="0"
+        android:background="@drawable/profile2" />
+    <!-- filler -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
+
+
 
 
 
