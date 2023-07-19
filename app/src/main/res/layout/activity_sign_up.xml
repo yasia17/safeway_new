@@ -47,16 +47,11 @@
             android:background="@drawable/edit_text_border"
             android:hint="Last Name:" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
 
         <EditText
             android:id="@+id/Age"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_margin="10dp"
-            android:padding="10dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@drawable/edit_text_border"
             android:hint="Age:" />
 
@@ -66,16 +61,12 @@
 
         <EditText
             android:id="@+id/Address"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_margin="10dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:padding="10dp"
             android:background="@drawable/edit_text_border"
             android:hint="Address:" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
 
         <EditText
             android:id="@+id/Email"
@@ -103,14 +94,14 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="35dp" />
+            android:layout_height="120dp" />
 
         <Button
             android:id="@+id/Submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:text="Continue to gender verification" />
+            android:text="Continue" />
 
     </LinearLayout>
 

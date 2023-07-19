@@ -75,8 +75,8 @@ public class SignUp extends AppCompatActivity {
     public boolean CheckSignUp(){
         String fname = String.valueOf(Fname.getText());
         String lname = String.valueOf(Lname.getText());
-        Integer age = Integer.valueOf(String.valueOf(Age.getText()));
-        String address = String.valueOf(Address.getText());
+        //Integer age = Integer.valueOf(String.valueOf(Age.getText()));
+        //String address = String.valueOf(Address.getText());
         String email = String.valueOf(Email.getText());
         String pass = String.valueOf(Pass.getText());
 
@@ -122,28 +122,28 @@ public class SignUp extends AppCompatActivity {
             return false;
         }
 
-        if (age==0||age==null) {
-            Toast.makeText(SignUp.this, "Age Is Empty", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (age<=0){
-            Toast.makeText(SignUp.this, "Age Invalid", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (address==""||address==null) {
-            Toast.makeText(SignUp.this, "Address IS Empty", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        for (int i =0;i<symbols.length;i++){
-            char c = symbols[i];
-            if (address.contains(String.valueOf(c))){
-                Toast.makeText(SignUp.this, "Address Contains Symbols", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        }
+//        if (age==0||age==null) {
+//            Toast.makeText(SignUp.this, "Age Is Empty", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//
+//        if (age<=0){
+//            Toast.makeText(SignUp.this, "Age Invalid", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//
+//        if (address==""||address==null) {
+//            Toast.makeText(SignUp.this, "Address IS Empty", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//
+//        for (int i =0;i<symbols.length;i++){
+//            char c = symbols[i];
+//            if (address.contains(String.valueOf(c))){
+//                Toast.makeText(SignUp.this, "Address Contains Symbols", Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//        }
 
         return true;
     }
@@ -156,8 +156,10 @@ public class SignUp extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             String fname = String.valueOf(Fname.getText());
                             String lname = String.valueOf(Lname.getText());
-                            Integer age = Integer.valueOf(String.valueOf(Age.getText()));
-                            String address = String.valueOf(Address.getText());
+                            //Integer age = Integer.valueOf(String.valueOf(Age.getText()));
+                            Integer age = 18;
+                            //String address = String.valueOf(Address.getText());
+                            String address = "aaa";
                             String email = String.valueOf(Email.getText());
                             String pass = String.valueOf(Pass.getText());
 

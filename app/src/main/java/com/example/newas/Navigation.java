@@ -3,6 +3,7 @@ package com.example.newas;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.LabeledIntent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -98,6 +100,8 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 
     private DistressCall currentDistressCall;
     private boolean isUserAcceptingCall = false;
+    private LinearLayout msgLayout;
+    private Button cancelMsgBtn;
 
     private boolean isPairingEnabled = false;
 
@@ -107,6 +111,9 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         setContentView(R.layout.activity_navigation);
 
         Log.d("main", "navigation");
+
+        msgLayout =findViewById(R.id.msg_layout);
+        cancelMsgBtn =findViewById(R.id.cancel_msg_btn);
 
         // Get references to UI elements
         destinationEditText = findViewById(R.id.Destination);
@@ -128,6 +135,8 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         currentUser = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
         distressCallsRef = database.getReference("DistressCalls");
+
+
 
         distressCallsRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -235,11 +244,16 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                     try {
                         List<Address> addressList = geocoder.getFromLocationName(destination, 1);
                         if (!addressList.isEmpty()) {
+                            msgLayout.setVisibility(View.VISIBLE);
+                            Toast.makeText(Navigation.this, "Found user,Creating video call", Toast.LENGTH_SHORT).show();
+
                             Address address = addressList.get(0);
                             LatLng destinationLatLng = new LatLng(address.getLatitude(), address.getLongitude());
                             addDestinationMarker(destinationLatLng);
                             showRouteToDestination(destinationLatLng);
                             showMeetingPoint();
+
+
                             //hideDistressCalls();
                         } else {
                             Toast.makeText(Navigation.this, "Destination not found", Toast.LENGTH_SHORT).show();
@@ -254,7 +268,14 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             }
         });
 
+        cancelMsgBtn.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                msgLayout.setVisibility(View.GONE);
+                googleMap.clear();
+            }
+        });
 
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_container);
@@ -342,7 +363,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         }
 
 
-        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_custom_marker);
+
 
 
         MarkerOptions markerOptions = new MarkerOptions()
