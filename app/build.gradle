@@ -39,6 +39,10 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-ml-vision:24.0.3'
+
+
+
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -81,3 +85,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
+
