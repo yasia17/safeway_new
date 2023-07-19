@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="bottom|center_horizontal"
     android:background="@color/light_sand">
 
     <LinearLayout
@@ -15,12 +15,6 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-<!--        <Button-->
-<!--            android:id="@+id/settings_btn"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:layout_weight="0"-->
-<!--            android:background="@drawable/settings" />-->
 
         <ImageView
             android:id="@+id/imageView3"
@@ -55,21 +49,11 @@
 <!--        android:layout_width="fill_parent"-->
 <!--        android:layout_weight="1" />-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="317dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        tools:context=".listactiv">
+    <View
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1" />
 
-
-        <ListView
-            android:id="@+id/list_view"
-            android:layout_width="match_parent"
-            android:layout_height="600dp" />
-
-
-    </LinearLayout>
 
 
 <!--    the down pannel-->
@@ -91,7 +75,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_weight="0"
-            android:background="@drawable/settings"
+            android:background="@drawable/settings2"
             tools:ignore="SpeakableTextPresentCheck" />
         <!-- filler -->
         <View
@@ -105,7 +89,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_weight="0"
-            android:background="@drawable/location"
+            android:background="@drawable/home"
             tools:ignore="SpeakableTextPresentCheck" />
         <!-- filler -->
         <View
@@ -119,7 +103,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_weight="0"
-            android:background="@drawable/profile"
+            android:background="@drawable/profile2"
             tools:ignore="SpeakableTextPresentCheck" />
         <!-- filler -->
         <View

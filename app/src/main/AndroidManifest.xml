@@ -43,6 +43,9 @@
             android:name=".Home"
             android:exported="false" />
         <activity
+            android:name=".Settings"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
