@@ -45,6 +45,11 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
@@ -60,6 +65,7 @@ import com.google.maps.model.EncodedPolyline;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -135,6 +141,28 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         currentUser = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
         distressCallsRef = database.getReference("DistressCalls");
+
+
+
+
+//        // Set the fields to specify which types of place data to
+//        // return after the user has made a selection.
+//        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+//
+//        // Start the autocomplete intent.
+//        Intent autoCompleteIntent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+//                .build(this);
+//        startAutocomplete.launch(autoCompleteIntent);
+//
+//
+//
+//        // Initialize the SDK
+//        Places.initialize(getApplicationContext(), String.valueOf(R.string.Map_API_Key));
+//
+//        // Create a new PlacesClient instance
+//        PlacesClient placesClient = Places.createClient(this);
+
+
 
 
 
