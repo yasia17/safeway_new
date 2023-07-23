@@ -5,18 +5,79 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
-android:gravity="bottom"
+android:gravity="bottom|center_horizontal"
 android:background="@color/light_sand">
 
 
-<TextView
-    android:id="@+id/hellotxt"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Hello here are settings" />
+<!--    <LinearLayout-->
+<!--        android:id="@+id/notifications"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="85dp"-->
+<!--        android:gravity="center"-->
+<!--        android:minHeight="85dp">-->
 
 
-<LinearLayout
+<!--        <EditText-->
+<!--            android:id="@+id/editTextText"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:ems="10"-->
+<!--            android:inputType="text"-->
+<!--            android:text="Notifications" />-->
+
+<!--        <CheckBox-->
+<!--            android:id="@+id/checkBox"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1" />-->
+<!--    </LinearLayout>-->
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/NotificationsBtn"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_weight="0"
+        android:background="@drawable/notifications" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/AboutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_weight="0"
+        android:background="@drawable/aboutus" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1" />
+
+
+    <ImageButton
+        android:id="@+id/LogoutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_weight="0"
+        android:background="@drawable/logout" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1" />
+
+
+
+    <LinearLayout
     android:id="@+id/bottomLayout"
     android:layout_width="match_parent"
     android:layout_height="85dp"
@@ -67,9 +128,6 @@ android:background="@color/light_sand">
         android:layout_weight="1" />
 
 </LinearLayout>
-
-
-
 
 
 </LinearLayout>
