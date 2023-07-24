@@ -21,7 +21,9 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Destination:"/>
+            android:hint="Enter Destenation:"
+            android:imeOptions="actionSearch"
+            />
 
         <Button
             android:id="@+id/Search"

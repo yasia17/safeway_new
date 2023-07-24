@@ -14,7 +14,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -62,6 +64,10 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.EncodedPolyline;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -156,11 +162,11 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 //
 //
 //
-//        // Initialize the SDK
-//        Places.initialize(getApplicationContext(), String.valueOf(R.string.Map_API_Key));
-//
-//        // Create a new PlacesClient instance
-//        PlacesClient placesClient = Places.createClient(this);
+        // Initialize the SDK
+        Places.initialize(getApplicationContext(), String.valueOf(R.string.Map_API_Key));
+
+        // Create a new PlacesClient instance
+        PlacesClient placesClient = Places.createClient(this);
 
 
 
@@ -259,6 +265,19 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                     showCancelCallDialog(distressCall);
                     return true;
                 }
+                return false;
+            }
+        });
+
+
+        destinationEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+
+                if (i == EditorInfo.IME_ACTION_SEARCH || i== EditorInfo.IME_ACTION_DONE){
+
+                }
+
                 return false;
             }
         });
@@ -678,6 +697,9 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             addMeetingPointMarker(meetingPointLatLng);
         }
     }
+
+
+
 
     private void addMeetingPointMarker(LatLng latLng) {
         if (meetingPointMarker != null) {

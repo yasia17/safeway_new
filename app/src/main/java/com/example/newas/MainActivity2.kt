@@ -115,7 +115,10 @@ class MainActivity2 : AppCompatActivity() {
 
 
         button2 = findViewById(R.id.button2)
-        button2.setVisibility(View.INVISIBLE);
+        button2.setOnClickListener{
+            val intent = android.content.Intent(this@MainActivity2, Home::class.java)
+            startActivity(intent)
+        }
 
         button = findViewById(R.id.button1)
 

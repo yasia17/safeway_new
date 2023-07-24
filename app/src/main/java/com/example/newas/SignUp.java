@@ -162,12 +162,15 @@ public class SignUp extends AppCompatActivity {
                             String address = "aaa";
                             String email = String.valueOf(Email.getText());
                             String pass = String.valueOf(Pass.getText());
-
                             User user = new User(fname, lname, age, address, email, pass);
+
+
+
 
                             String uid = mAuth.getCurrentUser().getUid().toString();
 
                             db.getInstance("https://safewaymap-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(uid).setValue(user);
+
 
                             Intent I = new Intent(SignUp.this, Home.class);
                             startActivity(I);
