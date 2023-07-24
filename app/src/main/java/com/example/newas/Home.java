@@ -43,36 +43,36 @@ public class Home extends AppCompatActivity {
         walk_btn =findViewById(R.id.walk_btn);
 
 //        list initialize
-        list_view = findViewById(R.id.list_view);
-        userArrayList = new ArrayList<User>();
-        userArrayAdapter = new ArrayAdapter<>(this, R.layout.custom_row, userArrayList);
-        list_view.setAdapter(userArrayAdapter);
-
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-
-        Log.d("main", "before");
-
-        database.getReference("Users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("main", "inside");
-                userArrayList = new ArrayList<User>();
-                for (DataSnapshot data:snapshot.getChildren()) {
-                    User user = data.getValue(User.class);
-                    userArrayList.add(user);
-                }
-                list_view = findViewById(R.id.list_view);
-                userArrayAdapter = new UserArrayAdapter(Home.this, R.layout.custom_row, userArrayList);
-                list_view.setAdapter(userArrayAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("main", "database error");
-
-            }
-        });
+//        list_view = findViewById(R.id.list_view);
+//        userArrayList = new ArrayList<User>();
+//        userArrayAdapter = new ArrayAdapter<>(this, R.layout.custom_row, userArrayList);
+//        list_view.setAdapter(userArrayAdapter);
+//
+//        mAuth = FirebaseAuth.getInstance();
+//        database = FirebaseDatabase.getInstance();
+//
+//        Log.d("main", "before");
+//
+//        database.getReference("Users").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Log.d("main", "inside");
+//                userArrayList = new ArrayList<User>();
+//                for (DataSnapshot data:snapshot.getChildren()) {
+//                    User user = data.getValue(User.class);
+//                    userArrayList.add(user);
+//                }
+//                list_view = findViewById(R.id.list_view);
+//                userArrayAdapter = new UserArrayAdapter(Home.this, R.layout.custom_row, userArrayList);
+//                list_view.setAdapter(userArrayAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.d("main", "database error");
+//
+//            }
+//        });
 
         //on click to profile
         profile_btn.setOnClickListener(new View.OnClickListener() {
