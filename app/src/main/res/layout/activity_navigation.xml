@@ -12,36 +12,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:background="@color/Turquoise"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/Destination"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Enter Destenation:"
-            android:imeOptions="actionSearch"
-            />
+        <!--   <EditText
+               android:id="@+id/Destination"
+               android:layout_width="wrap_content"
+               android:layout_height="48dp"
+               android:layout_weight="1"
+               android:ems="10"
+               android:hint="Enter Destenation:"
+               android:imeOptions="actionSearch" /> -->
 
         <Button
             android:id="@+id/Search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/white"
+            android:background="@drawable/content_rounded_corners"
             android:text="Request help" />
 
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="576dp">
+        android:layout_height="650dp">
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:background="@color/MainBgColor_Darker"
             android:orientation="horizontal"
@@ -93,10 +93,11 @@
             android:id="@+id/map_container"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="662dp"
+            android:layout_height="700dp"
             android:layout_weight="1"
             tools:context=".Navigation"
             tools:layout="@layout/activity_map" />
+
 
        <!-- <TextView
             android:id="@+id/userCountTextView"
@@ -173,9 +174,11 @@
         android:layout_height="0dp"
         android:background="@drawable/navbar_layout"
         android:gravity="center"
-        android:minHeight="85dp">
+        android:minHeight="85dp"
+        android:visibility="gone" >
 
-        <ImageButton
+
+    <ImageButton
             android:id="@+id/SettingsBtn"
             android:layout_width="85dp"
             android:layout_height="85dp"
