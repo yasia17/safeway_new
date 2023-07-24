@@ -20,12 +20,12 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-    <channel
-        android:name="my_channel_name"
-        android:description="This channel is used for notifications from my app."
-        android:importance="high"
-        android:lockscreenVisibility="public"
-        android:showBadge="true" />
+<!--    <channel-->
+<!--        android:name="my_channel_name"-->
+<!--        android:description="This channel is used for notifications from my app."-->
+<!--        android:importance="high"-->
+<!--        android:lockscreenVisibility="public"-->
+<!--        android:showBadge="true" />-->
 
     <application
         android:allowBackup="true"
@@ -37,9 +37,7 @@
         <activity
             android:name=".About_us"
             android:exported="false" />
-        <activity
-            android:name=".About_us"
-            android:exported="false" />
+
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 

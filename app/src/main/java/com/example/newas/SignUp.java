@@ -163,9 +163,9 @@ public class SignUp extends AppCompatActivity {
 
                             User user = new User(fname, lname, age, address, email, pass);
 
-                            String uid = mAuth.getCurrentUser().getUid();
+                            String uid = mAuth.getCurrentUser().getUid().toString();
 
-                            db.getReference("Users").child(uid).setValue(user);
+                            db.getInstance("https://safewaymap-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(uid).setValue(user);
 
                             System.out.println("here create user");
 
