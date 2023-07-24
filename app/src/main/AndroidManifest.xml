@@ -26,6 +26,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewAS">
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDT9rZERLZVAegTvTmly1B3vmDmphQ8rI0" />
+
+        <activity
+            android:name=".MainActivity3"
+            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -37,9 +44,7 @@
              project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
              "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
         -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDT9rZERLZVAegTvTmly1B3vmDmphQ8rI0" />
+
 
         <activity
             android:name=".Home"
