@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="bottom|center_horizontal"
-    android:background="@color/light_sand">
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/textView8"

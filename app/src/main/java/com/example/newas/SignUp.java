@@ -27,7 +27,6 @@ public class SignUp extends AppCompatActivity {
     private EditText Email;
     private EditText Pass;
     private EditText Age;
-    private EditText Address;
     private Button Submit;
 
     private FirebaseAuth mAuth;
@@ -44,15 +43,24 @@ public class SignUp extends AppCompatActivity {
         Fname = findViewById(R.id.Fname);
         Lname = findViewById(R.id.Lname);
         Age = findViewById(R.id.Age);
-        Address = findViewById(R.id.Address);
+//        Address = findViewById(R.id.Address);
         Email = findViewById(R.id.Email);
         Pass = findViewById(R.id.Pass);
+        Button logIn = findViewById(R.id.linkToLogIn);
 
         Submit = findViewById(R.id.Submit);
 
         mAuth = FirebaseAuth.getInstance();
 
         db = FirebaseDatabase.getInstance();
+
+        logIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignUp.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +84,7 @@ public class SignUp extends AppCompatActivity {
         String fname = String.valueOf(Fname.getText());
         String lname = String.valueOf(Lname.getText());
         Integer age = Integer.valueOf(String.valueOf(Age.getText()));
-        String address = String.valueOf(Address.getText());
+//        String address = String.valueOf(Address.getText());
         String email = String.valueOf(Email.getText());
         String pass = String.valueOf(Pass.getText());
 
@@ -132,18 +140,6 @@ public class SignUp extends AppCompatActivity {
             return false;
         }
 
-        if (address==""||address==null) {
-            Toast.makeText(SignUp.this, "Address IS Empty", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        for (int i =0;i<symbols.length;i++){
-            char c = symbols[i];
-            if (address.contains(String.valueOf(c))){
-                Toast.makeText(SignUp.this, "Address Contains Symbols", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        }
 
         return true;
     }
@@ -157,11 +153,10 @@ public class SignUp extends AppCompatActivity {
                             String fname = String.valueOf(Fname.getText());
                             String lname = String.valueOf(Lname.getText());
                             Integer age = Integer.valueOf(String.valueOf(Age.getText()));
-                            String address = String.valueOf(Address.getText());
                             String email = String.valueOf(Email.getText());
                             String pass = String.valueOf(Pass.getText());
 
-                            User user = new User(fname, lname, age, address, email, pass);
+                            User user = new User(fname, lname, age, email, pass);
 
                             String uid = mAuth.getCurrentUser().getUid().toString();
 
@@ -171,7 +166,7 @@ public class SignUp extends AppCompatActivity {
 
                             Log.d("main", "on complete in create user");
 
-                            Intent I = new Intent(SignUp.this, Home .class);
+                            Intent I = new Intent(SignUp.this, Home.class);
                             startActivity(I);
                         } else {
                             Toast.makeText(SignUp.this, "Auth Failed", Toast.LENGTH_SHORT).show();

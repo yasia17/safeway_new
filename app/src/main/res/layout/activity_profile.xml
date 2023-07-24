@@ -7,7 +7,7 @@
     tools:context=".Profile"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/MainBgColor">
+    android:background="@drawable/background">
 
 
     <ImageView
