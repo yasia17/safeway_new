@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="bottom|center_horizontal"
+    android:background="@drawable/background">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Our Mission:
+At SafeWay, we are committed to empowering women and providing them with the tools they need to feel safer while walking alone. Our mission is to create a world where every woman can move freely without fear and anxiety.
+
+Why SafeWay?
+Walking alone can be daunting, but with SafeWay, you're never truly alone. As women, we understand the concerns and challenges of walking alone, especially during vulnerable times. SafeWay is not just an app; it's a community that stands with you, ensuring your safety is never compromised." />
+</LinearLayout>

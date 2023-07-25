@@ -27,14 +27,13 @@ public class Profile extends AppCompatActivity {
         ImageButton Nav = findViewById(R.id.NavBtn);
         ImageButton Profile = findViewById(R.id.ProfileBtn);
 
-        Button LogOut = findViewById(R.id.LogOutBtn);
 
-        LogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        LogOut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         Settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +46,7 @@ public class Profile extends AppCompatActivity {
         Nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Profile.this,Navigation.class);
+                Intent i = new Intent(Profile.this,Home.class);
                 startActivity(i);
             }
         });

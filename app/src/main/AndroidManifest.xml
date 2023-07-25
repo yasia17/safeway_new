@@ -17,6 +17,17 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+<!--    <channel-->
+<!--        android:name="my_channel_name"-->
+<!--        android:description="This channel is used for notifications from my app."-->
+<!--        android:importance="high"-->
+<!--        android:lockscreenVisibility="public"-->
+<!--        android:showBadge="true" />-->
 
     <application
         android:allowBackup="true"
@@ -25,6 +36,9 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewAS">
+        <activity
+            android:name=".About_us"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -50,7 +64,10 @@
             android:name=".Home"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Settings"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
             android:exported="false" />
         <activity
             android:name=".MaleActivity"
@@ -65,7 +82,7 @@
             android:name=".Profile"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
