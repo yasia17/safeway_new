@@ -109,6 +109,9 @@ class MainActivity2 : AppCompatActivity() {
 
     private val shift = 5
 
+    private var alertDialog: AlertDialog? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
@@ -163,6 +166,8 @@ class MainActivity2 : AppCompatActivity() {
         progressDialog = ProgressDialog( this )
         progressDialog.setCancelable( false )
         progressDialog.setMessage( "Searching for faces ...")
+
+
 
         showModelInitDialog()
 
@@ -405,4 +410,7 @@ class MainActivity2 : AppCompatActivity() {
         matrix.preRotate(degrees)
         return Bitmap.createBitmap(original, 0, 0, original.width, original.height, matrix, true)
     }
+
+
+
 }

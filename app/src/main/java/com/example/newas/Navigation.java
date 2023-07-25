@@ -436,7 +436,7 @@
             List<com.google.android.gms.maps.model.LatLng> latLngList = new ArrayList<>();
 
             int numPoints = decodedPath.size();
-            int quarterPoint = numPoints / 10; // Find the quarter point of the route
+            int quarterPoint = numPoints / 5; // Find the quarter point of the route
 
             for (int i = 0; i < numPoints; i++) {
                 com.google.maps.model.LatLng decodedLatLng = decodedPath.get(i);
