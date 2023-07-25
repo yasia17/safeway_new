@@ -9,8 +9,7 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -22,13 +21,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-<!--    <channel-->
-<!--        android:name="my_channel_name"-->
-<!--        android:description="This channel is used for notifications from my app."-->
-<!--        android:importance="high"-->
-<!--        android:lockscreenVisibility="public"-->
-<!--        android:showBadge="true" />-->
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -36,6 +28,9 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewAS">
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
         <activity
             android:name=".About_us"
             android:exported="false" />
@@ -58,8 +53,6 @@
              project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
              "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
         -->
-
-
         <activity
             android:name=".Home"
             android:exported="false" />
@@ -82,7 +75,7 @@
             android:name=".Profile"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Data_info"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
