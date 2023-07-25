@@ -54,8 +54,8 @@ class MainActivity2 : AppCompatActivity() {
 
     // Initialize the MLKit FaceDetector
     private val realTimeOpts = FaceDetectorOptions.Builder()
-        .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
-        .build()
+            .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+            .build()
     private val firebaseFaceDetector = FaceDetection.getClient(realTimeOpts)
 
     // UI elements
@@ -92,25 +92,22 @@ class MainActivity2 : AppCompatActivity() {
     private val compatList = CompatibilityList()
     // Model names, as shown in the spinner.
     private val modelNames = arrayOf(
-        "Age/Gender Detection Model ( Quantized ) ",
-        "Age/Gender Detection Model ( Non-quantized )",
-        "Age/Gender Detection Lite Model ( Quantized )",
-        "Age/Gender Detection Lite Model ( Non-quantized )",
+            "Age/Gender Detection Model ( Quantized ) ",
+            "Age/Gender Detection Model ( Non-quantized )",
+            "Age/Gender Detection Lite Model ( Quantized )",
+            "Age/Gender Detection Lite Model ( Non-quantized )",
     )
     // Filepaths of the models ( in the assets folder ) corresponding to the models in `modelNames`.
     private val modelFilenames = arrayOf(
-        arrayOf("model_age_q.tflite", "model_gender_q.tflite"),
-        arrayOf("model_age_nonq.tflite", "model_gender_nonq.tflite"),
-        arrayOf("model_lite_age_q.tflite", "model_lite_gender_q.tflite"),
-        arrayOf("model_lite_age_nonq.tflite", "model_lite_gender_nonq.tflite"),
+            arrayOf("model_age_q.tflite", "model_gender_q.tflite"),
+            arrayOf("model_age_nonq.tflite", "model_gender_nonq.tflite"),
+            arrayOf("model_lite_age_q.tflite", "model_lite_gender_q.tflite"),
+            arrayOf("model_lite_age_nonq.tflite", "model_lite_gender_nonq.tflite"),
     )
     // Default model filename
     private var modelFilename = arrayOf( "model_age_q.tflite", "model_gender_q.tflite" )
 
     private val shift = 5
-
-    private var alertDialog: AlertDialog? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -166,8 +163,6 @@ class MainActivity2 : AppCompatActivity() {
         progressDialog = ProgressDialog( this )
         progressDialog.setCancelable( false )
         progressDialog.setMessage( "Searching for faces ...")
-
-
 
         showModelInitDialog()
 
@@ -263,12 +258,12 @@ class MainActivity2 : AppCompatActivity() {
             var bitmap = BitmapFactory.decodeFile( currentPhotoPath )
             val exifInterface = ExifInterface( currentPhotoPath )
             bitmap =
-                when (exifInterface.getAttributeInt( ExifInterface.TAG_ORIENTATION , ExifInterface.ORIENTATION_UNDEFINED )) {
-                    ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap( bitmap , 90f )
-                    ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap( bitmap , 180f )
-                    ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap( bitmap , 270f )
-                    else -> bitmap
-                }
+                    when (exifInterface.getAttributeInt( ExifInterface.TAG_ORIENTATION , ExifInterface.ORIENTATION_UNDEFINED )) {
+                        ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap( bitmap , 90f )
+                        ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap( bitmap , 180f )
+                        ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap( bitmap , 270f )
+                        else -> bitmap
+                    }
             progressDialog.show()
             // Pass the clicked picture to `detectFaces`.
             detectFaces( bitmap!! )
@@ -288,62 +283,62 @@ class MainActivity2 : AppCompatActivity() {
         val inputImage = InputImage.fromBitmap(image, 0)
         // Pass the clicked picture to MLKit's FaceDetector.
         firebaseFaceDetector.process(inputImage)
-            .addOnSuccessListener { faces ->
-                if ( faces.size != 0 ) {
-                    // Set the cropped Bitmap into sampleImageView.
-                    sampleImageView.setImageBitmap(cropToBBox(image, faces[0].boundingBox))
-                    // Launch a coroutine
-                    coroutineScope.launch {
+                .addOnSuccessListener { faces ->
+                    if ( faces.size != 0 ) {
+                        // Set the cropped Bitmap into sampleImageView.
+                        sampleImageView.setImageBitmap(cropToBBox(image, faces[0].boundingBox))
+                        // Launch a coroutine
+                        coroutineScope.launch {
 
-                        // Predict the age and the gender.
-                        val age = ageEstimationModel.predictAge(cropToBBox(image, faces[0].boundingBox))
-                        val gender = genderClassificationModel.predictGender(cropToBBox(image, faces[0].boundingBox))
+                            // Predict the age and the gender.
+                            val age = ageEstimationModel.predictAge(cropToBBox(image, faces[0].boundingBox))
+                            val gender = genderClassificationModel.predictGender(cropToBBox(image, faces[0].boundingBox))
 
-                        // Show the inference time to the user via `inferenceSpeedTextView`.
-                        inferenceSpeedTextView.text = "Age Detection model inference time : ${ageEstimationModel.inferenceTime} ms \n" +
-                                "Gender Detection model inference time : ${ageEstimationModel.inferenceTime} ms"
+                            // Show the inference time to the user via `inferenceSpeedTextView`.
+                            inferenceSpeedTextView.text = "Age Detection model inference time : ${ageEstimationModel.inferenceTime} ms \n" +
+                                    "Gender Detection model inference time : ${ageEstimationModel.inferenceTime} ms"
 
-                        // Show the final output to the user.
-                        ageOutputTextView.text = floor( age.toDouble() ).toInt().toString()
-                        genderOutputTextView.text = if ( gender[ 0 ] > gender[ 1 ] ) { "Male" } else { "Female" }
-                        resultsLayout.visibility = View.VISIBLE
-                        infoTextView.visibility = View.GONE
+                            // Show the final output to the user.
+                            ageOutputTextView.text = floor( age.toDouble() ).toInt().toString()
+                            genderOutputTextView.text = if ( gender[ 0 ] > gender[ 1 ] ) { "Male" } else { "Female" }
+                            resultsLayout.visibility = View.VISIBLE
+                            infoTextView.visibility = View.GONE
+                            progressDialog.dismiss()
+                            if (genderOutputTextView.text.toString().equals("Male", ignoreCase = true)) {
+                                val intent = android.content.Intent(this@MainActivity2, MaleActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                val intent = android.content.Intent(this@MainActivity2, SignUp::class.java)
+                                startActivity(intent)
+                            }
+                        }
+                    } else {
+                        // Show a dialog to the user when no faces were detected.
                         progressDialog.dismiss()
-                        if (genderOutputTextView.text.toString().equals("Male", ignoreCase = true)) {
-                            val intent = android.content.Intent(this@MainActivity2, MaleActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            val intent = android.content.Intent(this@MainActivity2, SignUp::class.java)
-                            startActivity(intent)
+                        val dialog = AlertDialog.Builder(this).apply {
+                            title = "No Faces Found"
+                            setMessage(
+                                    "We could not find any faces in the image you just clicked. " +
+                                            "Try clicking another image or improve the lighting or the device rotation."
+                            )
+                            setPositiveButton("OK") { dialog, which ->
+                                dialog.dismiss()
+                            }
+                            setCancelable(false)
+                            create()
                         }
+                        dialog.show()
                     }
-                } else {
-                    // Show a dialog to the user when no faces were detected.
-                    progressDialog.dismiss()
-                    val dialog = AlertDialog.Builder(this).apply {
-                        title = "No Faces Found"
-                        setMessage(
-                            "We could not find any faces in the image you just clicked. " +
-                                    "Try clicking another image or improve the lighting or the device rotation."
-                        )
-                        setPositiveButton("OK") { dialog, which ->
-                            dialog.dismiss()
-                        }
-                        setCancelable(false)
-                        create()
-                    }
-                    dialog.show()
                 }
-            }
     }
 
     private fun cropToBBox(image: Bitmap, bbox: Rect): Bitmap {
         return Bitmap.createBitmap(
-            image,
-            bbox.left - 0 * shift,
-            bbox.top + shift,
-            bbox.width() + 0 * shift,
-            bbox.height() + 0 * shift
+                image,
+                bbox.left - 0 * shift,
+                bbox.top + shift,
+                bbox.width() + 0 * shift,
+                bbox.height() + 0 * shift
         )
     }
 
@@ -376,9 +371,9 @@ class MainActivity2 : AppCompatActivity() {
             }
             photoFile?.also {
                 val photoURI = FileProvider.getUriForFile(
-                    this,
-                    "com.example.newas.fileprovider",
-                    it
+                        this,
+                        "com.example.newas.fileprovider",
+                        it
                 )
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
@@ -387,9 +382,9 @@ class MainActivity2 : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -410,7 +405,4 @@ class MainActivity2 : AppCompatActivity() {
         matrix.preRotate(degrees)
         return Bitmap.createBitmap(original, 0, 0, original.width, original.height, matrix, true)
     }
-
-
-
 }
