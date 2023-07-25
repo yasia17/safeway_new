@@ -86,7 +86,7 @@ public class Settings extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                signOutUser();
             }
         });
         
@@ -113,5 +113,17 @@ public class Settings extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void signOutUser() {
+        mAuth.signOut();
+
+        // After signing out, you can navigate the user to the login screen or any other appropriate screen
+        // For example, you can start your LoginActivity or HomeActivity
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+        // Finish the current activity to prevent the user from going back to it using the back button
+        finish();
     }
 }

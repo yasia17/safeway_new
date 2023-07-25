@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Intent i = new Intent(MainActivity.this, Navigation.class);
+                            Intent i = new Intent(MainActivity.this, Home.class);
                             startActivity(i);
                         } else {
                             Toast.makeText(MainActivity.this, "Auth Failed", Toast.LENGTH_SHORT).show();

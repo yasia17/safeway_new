@@ -67,11 +67,7 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
                 if (CheckSignUp()) {
                     if (PermissionHelper.checkLocationPermission(SignUp.this)) {
-                        System.out.println("before create");
-                        Log.d("main", "before create signup");
                         CreateUser(Email.getText().toString(), Pass.getText().toString());
-                        System.out.println("after create");
-                        Log.d("main", "after create signup");
                     } else {
                         PermissionHelper.requestLocationPermission(SignUp.this);
                     }
