@@ -29,7 +29,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewAS">
         <activity
-            android:name=".data_info"
+            android:name=".SOS"
+            android:exported="false" />
+        <activity
+            android:name=".Data_info"
             android:exported="false" />
         <activity
             android:name=".About_us"
