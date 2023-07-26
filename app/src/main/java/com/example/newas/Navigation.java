@@ -42,6 +42,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -130,7 +132,10 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_container);
-        mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync(Navigation.this);
+
+        Places.initialize(getApplicationContext(), getString(R.string.Map_API_Key));
+        geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.Map_API_Key)).build();
 
 //        msgLayout =findViewById(R.id.msg_layout);
 //        cancelMsgBtn =findViewById(R.id.cancel_msg_btn);
@@ -172,8 +177,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         //
         //
         // Initialize the SDK
-        Places.initialize(getApplicationContext(), getString(R.string.Map_API_Key));
-        geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.Map_API_Key)).build();
+
 
 
         // Create a new PlacesClient instance
@@ -205,6 +209,16 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 //                Log.e(TAG, "Failed to read distress calls", error.toException());
 //            }
 //        });
+
+       ImageButton sos_btn = findViewById(R.id.sos);
+
+       sos_btn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(Navigation.this, SOS.class);
+               startActivity(intent);
+           }
+       });
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -359,9 +373,8 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             // Request location permission
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        fetchLastLocation();
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -403,10 +416,6 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             userMarker.remove();
         }
 
-
-
-
-
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLng)
                 .title("You are here")
@@ -415,14 +424,25 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         userMarker = googleMap.addMarker(markerOptions);
     }
 
-    private void addDestinationMarker(LatLng latLng) {
+    private void addDestinationMarker(LatLng latLng,String destination) {
         if (destinationMarker != null) {
             destinationMarker.remove();
         }
         destinationMarker = googleMap.addMarker(new MarkerOptions()
                 .position(latLng)
-                .title("Destination")
+                .title(destination)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+          Toast.makeText(Navigation.this,latLng.toString() , Toast.LENGTH_SHORT).show();
+    }
+
+    private void showMeetingPoint(LatLng latLng) {
+        if (meetingPointMarker != null) {
+            meetingPointMarker.remove();
+        }
+        meetingPointMarker = googleMap.addMarker(new MarkerOptions()
+                .position(latLng)
+                .title("Meeting Point")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
     }
 
 
@@ -464,7 +484,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                 PolylineOptions polylineOptions = new PolylineOptions()
                         .add(latLngList.get(i - 1), latLngList.get(i))
                         .color(color)
-                        .width(10);
+                        .width(15);
                 Polyline segmentPolyline = googleMap.addPolyline(polylineOptions);
                 polylines.add(segmentPolyline);
             }
@@ -473,15 +493,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         userRoutePolyline = googleMap.addPolyline(new PolylineOptions().addAll(latLngList).color(Color.TRANSPARENT)); // Transparent polyline for the overall route
     }
 
-    private void showMeetingPoint(LatLng latLng) {
-        if (meetingPointMarker != null) {
-            meetingPointMarker.remove();
-        }
-        meetingPointMarker = googleMap.addMarker(new MarkerOptions()
-                .position(latLng)
-                .title("Meeting Point")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-    }
+
 
 
 
@@ -678,11 +690,11 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 //                        msgLayout.setVisibility(View.VISIBLE);
 //                        Toast.makeText(Navigation.this, "Found user,Creating video call", Toast.LENGTH_SHORT).show();
 
-                        // Add destination marker on the map
-                        addDestinationMarker(destinationLatLng);
-
                         // Show route to destination
                         showRouteToDestination(destinationLatLng);
+
+                        // Add destination marker on the map
+                        addDestinationMarker(destinationLatLng,destination);
 
                         // Show meeting point
                         showMeetingPoint();

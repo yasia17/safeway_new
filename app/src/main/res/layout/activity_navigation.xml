@@ -9,147 +9,42 @@
     android:gravity="bottom|center_horizontal"
     android:layout_height="match_parent">
 
-
-
-    <!--    map layout-->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-
-        <!--        !!!that was a layout for messages!!!-->
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:layout_margin="10dp"-->
-        <!--            android:background="@color/MainBgColor_Darker"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:id="@+id/msg_layout"-->
-        <!--            android:visibility="gone">-->
-
-        <!--            <ImageView-->
-        <!--                android:layout_width="90dp"-->
-        <!--                android:layout_height="90dp"-->
-        <!--                android:layout_margin="10dp"-->
-        <!--                android:src="@drawable/profile_pic" />-->
-
-        <!--            <LinearLayout-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:orientation="vertical">-->
-
-        <!--                <TextView-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_margin="10dp"-->
-        <!--                    android:textColor="@color/blue"-->
-        <!--                    android:textSize="20dp"-->
-        <!--                    android:textStyle="bold"-->
-        <!--                    android:text="You have been matched with [user name]!" />-->
-
-        <!--                <TextView-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_margin="10dp"-->
-        <!--                    android:textColor="@color/Turquoise"-->
-        <!--                    android:textSize="20dp"-->
-        <!--                    android:text="Starting video call..." />-->
-
-        <!--                <Button-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_gravity="center"-->
-        <!--                    android:text="Cancel"-->
-        <!--                    android:textColor="@color/red"-->
-        <!--                    android:id="@+id/cancel_msg_btn" />-->
-
-        <!--            </LinearLayout>-->
-
-        <!--        </LinearLayout>-->
-
-        <Button
-            android:id="@+id/Search"
-            android:layout_width="match_parent"
-            android:layout_height="84dp"
-            android:layout_weight="1"
-            android:contentDescription="search_bar"
-            android:background="@drawable/choose_dest_btn" />
-
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <!--the map fragment-->
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map_container"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="551dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             tools:context=".Navigation"
             tools:layout="@layout/activity_map" />
 
+        <!-- Search button -->
+        <Button
+            android:id="@+id/Search"
+            android:layout_width="wrap_content"
+            android:layout_height="84dp"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="16dp"
+            android:contentDescription="search_bar"
+            android:background="@drawable/choose_dest_btn" />
 
-        <!-- <TextView
-             android:id="@+id/userCountTextView"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_margin="20dp"
-             android:layout_alignParentStart="true"
-             android:layout_alignParentTop="true"
-             android:textSize="20dp"
-             android:text="count"
-             android:textColor="@android:color/black" />-->
-
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:orientation="vertical"-->
-        <!--            android:layout_margin="10dp"-->
-        <!--            android:layout_gravity="bottom|start">-->
-
-
-        <!--            !!!it was a layout to help and request counter-->
-        <!--            <RelativeLayout-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content">-->
-
-        <!-- <ImageButton
-             android:id="@+id/HelpRequests"
-             android:layout_width="70dp"
-             android:layout_height="70dp"
-             android:layout_marginStart="10dp"
-             android:layout_marginTop="10dp"
-             android:layout_marginEnd="10dp"
-             android:layout_marginBottom="10dp"
-             android:background="@drawable/not_selected"
-             android:contentDescription="view help request button"
-             android:padding="6dp"
-             android:scaleType="fitCenter"
-             android:src="@drawable/help" />
-
-         <TextView
-             android:id="@+id/helpReqCounter"
-             android:layout_width="30dp"
-             android:layout_height="30dp"
-             android:layout_marginTop="1dp"
-             android:layout_marginStart="10dp"
-             android:background="@drawable/help_req_c"
-             android:gravity="center"
-             android:text="0"
-             android:textSize="20sp"
-             android:textColor="@android:color/white" />-->
-        <!--            </RelativeLayout>-->
-
-        <!--<ImageButton
-            android:id="@+id/CallPolice"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+        <!-- SOS button -->
+        <ImageButton
+            android:id="@+id/sos"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom|start"
             android:layout_margin="10dp"
-            android:background="@drawable/not_selected"
-            android:padding="7dp"
-            android:contentDescription="call police button"
+            android:background="@drawable/button_background"
             android:scaleType="fitCenter"
-            android:src="@drawable/police" />-->
-        <!--        </LinearLayout>-->
+            android:contentDescription="sos btn"
+            android:src="@drawable/soslogo" />
+
     </FrameLayout>
 
     <LinearLayout
@@ -207,55 +102,4 @@
 
     </LinearLayout>
 
-    <!--    <ListView-->
-    <!--        android:id="@+id/distressCallListView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_margin="10dp"-->
-    <!--        android:visibility="gone" />-->
-
-    <!--    <LinearLayout-->
-    <!--        android:id="@+id/bottomLayout"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:background="@drawable/navbar_layout"-->
-    <!--        android:gravity="center"-->
-    <!--        android:minHeight="85dp"-->
-    <!--        android:visibility="gone" >-->
-
-
-    <!--    <ImageButton-->
-    <!--            android:id="@+id/SettingsBtn"-->
-    <!--            android:layout_width="85dp"-->
-    <!--            android:layout_height="85dp"-->
-    <!--            android:layout_margin="10dp"-->
-    <!--            android:background="@drawable/not_selected"-->
-    <!--            android:padding="1dp"-->
-    <!--            android:contentDescription="settings button"-->
-    <!--            android:scaleType="fitCenter"-->
-    <!--            android:src="@drawable/settings" />-->
-
-    <!--        <ImageButton-->
-    <!--            android:id="@+id/NavBtn"-->
-    <!--            android:layout_width="85dp"-->
-    <!--            android:layout_height="85dp"-->
-    <!--            android:layout_margin="10dp"-->
-    <!--            android:background="@drawable/selected"-->
-    <!--            android:padding="1dp"-->
-    <!--            android:contentDescription="navigation button"-->
-    <!--            android:scaleType="fitCenter"-->
-    <!--            android:src="@drawable/nav_icon" />-->
-
-    <!--        <ImageButton-->
-    <!--            android:id="@+id/ProfileBtn"-->
-    <!--            android:layout_width="85dp"-->
-    <!--            android:layout_height="85dp"-->
-    <!--            android:layout_margin="10dp"-->
-    <!--            android:background="@drawable/not_selected"-->
-    <!--            android:padding="1dp"-->
-    <!--            android:scaleType="fitCenter"-->
-    <!--            android:contentDescription="profile button"-->
-    <!--            android:src="@drawable/profile_pic" />-->
-
-    <!--    </LinearLayout>-->
 </LinearLayout>
