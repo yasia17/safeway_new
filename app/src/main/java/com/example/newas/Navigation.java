@@ -428,11 +428,17 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         if (destinationMarker != null) {
             destinationMarker.remove();
         }
+        Log.d(TAG, "Adding destination marker");
         destinationMarker = googleMap.addMarker(new MarkerOptions()
                 .position(latLng)
                 .title(destination)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-          Toast.makeText(Navigation.this,latLng.toString() , Toast.LENGTH_SHORT).show();
+
+        if (destinationMarker != null) {
+            Log.d(TAG, "Destination marker added successfully");
+        } else {
+            Log.d(TAG, "Failed to add destination marker");
+        }
     }
 
     private void showMeetingPoint(LatLng latLng) {
@@ -675,31 +681,22 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 LatLng destinationLatLng = place.getLatLng();
 
-                // Now you have the selected place's latitude and longitude (destinationLatLng)
-                // You can use the geocoder to find the destination address and implement your navigation logic here
-
                 try {
                     Geocoder geocoder = new Geocoder(Navigation.this);
                     List<Address> addressList = geocoder.getFromLocation(destinationLatLng.latitude, destinationLatLng.longitude, 1);
                     if (!addressList.isEmpty()) {
-                        // Found the address
                         Address address = addressList.get(0);
-                        String destination = address.getAddressLine(0); // Destination address
-
-//                        // Show the message layout
-//                        msgLayout.setVisibility(View.VISIBLE);
-//                        Toast.makeText(Navigation.this, "Found user,Creating video call", Toast.LENGTH_SHORT).show();
+                        String destination = address.getAddressLine(0);
 
                         // Show route to destination
                         showRouteToDestination(destinationLatLng);
 
                         // Add destination marker on the map
-                        addDestinationMarker(destinationLatLng,destination);
+                        addDestinationMarker(destinationLatLng, destination);
 
-                        // Show meeting point
-                        showMeetingPoint();
+                        // Show meeting point (which is the destination in this case)
+                        showMeetingPoint(destinationLatLng);
                     } else {
-                        // Destination not found
                         Toast.makeText(Navigation.this, "Destination not found", Toast.LENGTH_SHORT).show();
                     }
                 } catch (IOException e) {

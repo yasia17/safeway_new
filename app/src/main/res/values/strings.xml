@@ -10,5 +10,11 @@
     <string name="security_message">We prioritize your data\'s safety and have implemented many measures to secure and protect your private information.\n\n We ensure you our app will maintain your data\'s privacy at all times.
     </string>
 
+    <string name="about_us">Our Mission:
+At SafeWay, we are committed to empowering women and providing them with the tools they need to feel safer while walking alone. Our mission is to create a world where every woman can move freely without fear and anxiety.
+
+Why SafeWay?
+Walking alone can be daunting, but with SafeWay, you\'re never truly alone. As women, we understand the concerns and challenges of walking alone, especially during vulnerable times. SafeWay is not just an app; it\'s a community that stands with you, ensuring your safety is never compromised.
+    </string>
 
 </resources>

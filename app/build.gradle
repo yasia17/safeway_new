@@ -5,6 +5,7 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 
 
+
     //id 'com.google.gms.google-services'
 
 
@@ -90,4 +91,5 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.android.gms.strict-version-matcher-plugin'
 
