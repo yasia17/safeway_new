@@ -210,15 +210,15 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 //            }
 //        });
 
-       ImageButton sos_btn = findViewById(R.id.sos);
+        ImageButton sos_btn = findViewById(R.id.sos);
 
-       sos_btn.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               Intent intent = new Intent(Navigation.this, SOS.class);
-               startActivity(intent);
-           }
-       });
+        sos_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Navigation.this, SOS.class);
+                startActivity(intent);
+            }
+        });
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -432,7 +432,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                 .position(latLng)
                 .title(destination)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-          Toast.makeText(Navigation.this,latLng.toString() , Toast.LENGTH_SHORT).show();
+        Toast.makeText(Navigation.this,latLng.toString() , Toast.LENGTH_SHORT).show();
     }
 
     private void showMeetingPoint(LatLng latLng) {

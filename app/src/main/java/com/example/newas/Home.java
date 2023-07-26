@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,7 @@ public class Home extends AppCompatActivity {
     private ArrayAdapter<User> userArrayAdapter;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
+    private TextView hello_user;
 
 
     @Override
@@ -41,6 +43,7 @@ public class Home extends AppCompatActivity {
         location_btn = findViewById(R.id.location_btn);
         profile_btn = findViewById(R.id.profile_btn);
         walk_btn =findViewById(R.id.walk_btn);
+        hello_user = findViewById(R.id.hello_user);
 
 //        list initialize
 //        list_view = findViewById(R.id.list_view);
@@ -110,5 +113,18 @@ public class Home extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
     }
+
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if (currentUser != null) {
+//            String displayName = currentUser.getDisplayName();
+//            if (displayName != null && !displayName.isEmpty()) {
+//                String welcomeMessage = "Hello " + displayName;
+//                hello_user.setText(welcomeMessage);
+//            }
+//        }
+//    }
 }
