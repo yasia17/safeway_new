@@ -1,152 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="bottom|center_horizontal"
-    android:background="@drawable/background">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="133dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom|center_horizontal"
+        android:background="@drawable/background">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="133dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_weight="0"
-            app:srcCompat="@drawable/logo" />
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/logo" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/walk_btn"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="56dp"
+                android:background="@drawable/request_walk_btn"
+                android:paddingStart="25dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="25dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/blue"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/help_btn"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="56dp"
+                android:background="@drawable/help_others_btn"
+                android:paddingStart="25dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="25dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/blue"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </LinearLayout>
+
+        <!-- Add your desired content here -->
+
+        <!-- the down panel -->
+        <LinearLayout
+            android:id="@+id/bottomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:background="@drawable/navbar_layout"
+            android:gravity="bottom"
+            android:minHeight="85dp">
+
+            <!-- filler -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/settings_btn"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="0"
+                android:background="@drawable/settings2"
+                tools:ignore="SpeakableTextPresentCheck" />
+            <!-- filler -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/location_btn"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="0"
+                android:background="@drawable/home"
+                tools:ignore="SpeakableTextPresentCheck" />
+            <!-- filler -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/profile_btn"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="0"
+                android:background="@drawable/profile2"
+                tools:ignore="SpeakableTextPresentCheck" />
+            <!-- filler -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
-
-
-        <Button
-            android:id="@+id/walk_btn"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="56dp"
-            android:background="@drawable/request_walk_btn"
-            android:paddingStart="25dp"
-            android:paddingTop="15dp"
-            android:paddingEnd="25dp"
-            android:paddingBottom="15dp"
-            android:textColor="@color/blue"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/help_btn"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="56dp"
-            android:background="@drawable/help_others_btn"
-            android:paddingStart="25dp"
-            android:paddingTop="15dp"
-            android:paddingEnd="25dp"
-            android:paddingBottom="15dp"
-            android:textColor="@color/blue"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-    </LinearLayout>
-
-
-<!--    &lt;!&ndash; filler &ndash;&gt;-->
-<!--    <TextView android:layout_height="0dip"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_weight="1" />-->
-
-<!--    <ListView-->
-<!--        android:id="@+id/list_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="315dp" />-->
-
-
-
-
-
-<!--    the down pannel-->
-    <LinearLayout
-        android:id="@+id/bottomLayout"
-        android:layout_width="match_parent"
-        android:layout_height="85dp"
-        android:background="@drawable/navbar_layout"
-        android:gravity="bottom"
-        android:minHeight="85dp">
-        <!-- filler -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/settings_btn"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_weight="0"
-            android:background="@drawable/settings2"
-            tools:ignore="SpeakableTextPresentCheck" />
-        <!-- filler -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-
-        <Button
-            android:id="@+id/location_btn"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_weight="0"
-            android:background="@drawable/home"
-            tools:ignore="SpeakableTextPresentCheck" />
-        <!-- filler -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-
-        <Button
-            android:id="@+id/profile_btn"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_weight="0"
-            android:background="@drawable/profile2"
-            tools:ignore="SpeakableTextPresentCheck" />
-        <!-- filler -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-
 </LinearLayout>
