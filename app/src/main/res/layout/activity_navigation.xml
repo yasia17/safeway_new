@@ -14,11 +14,11 @@
 <!--    map layout-->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
 
 
-<!--        !!!that was a layout forssages!!!-->
+<!--        !!!that was a layout for messages!!!-->
 <!--        <LinearLayout-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent"-->
