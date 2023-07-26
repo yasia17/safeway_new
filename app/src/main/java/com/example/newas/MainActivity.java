@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SignUp.class);
+                Intent intent = new Intent(MainActivity.this, data_info.class);
                 startActivity(intent);
             }
         });
@@ -102,11 +102,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//        Button signupButton = findViewById(R.id.button_signup);
-//        signupButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(MainActivity.this, "Signup is under construction", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+

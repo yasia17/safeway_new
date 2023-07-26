@@ -29,8 +29,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewAS">
         <activity
+
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".About_us"
             android:exported="false" />
