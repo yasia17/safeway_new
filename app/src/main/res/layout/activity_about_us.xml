@@ -1,51 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="top|center_horizontal"
     android:background="@drawable/background">
 
+    <!-- Header Spacer -->
     <View
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1" />
 
-
-
+    <!-- Main Content -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="125dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <!-- Logo ImageView -->
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:src="@drawable/logo" />
 
-
-
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0"
-            app:srcCompat="@drawable/logo" />
-
-    </LinearLayout>
-
+    <!-- About Us Title -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="About Us"
         android:gravity="center"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:textStyle="bold"
-        android:textColor="@color/blue"
-        >
-    </TextView>
+        android:textColor="@color/blue" />
 
+    <!-- About Us Description -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,22 +49,30 @@
         android:text="@string/about_us"
         android:textAlignment="center"
         android:textColor="#333333"
-        android:textSize="21.5dp" />
+        android:textSize="21.5sp" />
 
-
-
-    <Button
-        android:id="@+id/Back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/arrow_btn"
-        android:contentDescription="continue button"
-        android:fontFamily="@font/source_sans_pro"
-        android:padding="20dp" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1" />
 </LinearLayout>
+
+    <!-- Footer Spacer -->
+<View
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:layout_weight="1" />
+
+    <!-- Back Button -->
+<Button
+android:id="@+id/Back"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_marginBottom="20dp"
+android:background="@drawable/arrow_btn"
+android:contentDescription="continue button"
+android:fontFamily="@font/source_sans_pro"
+android:padding="20dp" />
+
+    <!-- Bottom Spacer -->
+<View
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:layout_weight="1" />
+    </LinearLayout>

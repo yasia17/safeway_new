@@ -19,6 +19,7 @@ public class About_us extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(About_us.this,Settings.class);
+                startActivity(i);
             }
         });
     }

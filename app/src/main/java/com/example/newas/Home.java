@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
-
+    Button help_btn;
     Button settings_btn;
     Button location_btn;
     Button profile_btn;
@@ -40,7 +40,8 @@ public class Home extends AppCompatActivity {
         settings_btn = findViewById(R.id.settings_btn);
         location_btn = findViewById(R.id.location_btn);
         profile_btn = findViewById(R.id.profile_btn);
-        walk_btn =findViewById(R.id.walk_btn);
+        walk_btn = findViewById(R.id.walk_btn);
+        help_btn = findViewById(R.id.help_btn);
 
 //        list initialize
 //        list_view = findViewById(R.id.list_view);
@@ -107,6 +108,14 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Home.this, Navigation.class);
+                startActivity(i);
+            }
+        });
+
+        help_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Home.this, HelpList.class);
                 startActivity(i);
             }
         });

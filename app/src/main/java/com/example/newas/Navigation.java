@@ -131,6 +131,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
         Log.d("main", "navigation");
 
 
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_container);
         mapFragment.getMapAsync(Navigation.this);
 
@@ -139,6 +140,9 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 
 //        msgLayout =findViewById(R.id.msg_layout);
 //        cancelMsgBtn =findViewById(R.id.cancel_msg_btn);
+
+        // Retrieve the destinationLatLng from the intent
+
 
         // Get references to UI elements
         // destinationEditText = findViewById(R.id.Destination);
@@ -320,6 +324,31 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
             }
         });
 
+//        Intent iin = getIntent();
+//        Bundle b = iin.getExtras();
+//
+//        if (b != null) {
+//            String j = (String) b.get("list_click");
+//            if (j=="clicked") { // Use equals() instead of == to compare strings
+//
+//                double radius = 2000.0; // Set the radius in meters
+//                LatLng randomPoint = generateRandomLatLng(userLatLng, radius);
+//
+//                // Show route to the random point
+//                showRouteToDestination(randomPoint);
+//
+//                // Add destination marker on the map
+//                addDestinationMarker(randomPoint, "place");
+//
+//                // Show meeting point (which is the random point in this case)
+//                showMeetingPoint(randomPoint);
+//            }
+//        }
+
+
+
+    }
+
 
 
 
@@ -333,8 +362,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 //        });
 
 
-        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_container);
-        supportMapFragment.getMapAsync(this);
+
 
 //        distressCallListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -342,7 +370,8 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 //                // Handle distress call item click event
 //            }
 //        });
-    } //end of onCreate
+
+    //end of onCreate
 
     @Override
     protected void onStart() {
@@ -504,113 +533,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 
 
 
-//    private void showAcceptCallDialog() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(Navigation.this);
-//        builder.setTitle("Accept Distress Call");
-//        builder.setMessage("Are you sure you want to accept this distress call?");
-//        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                acceptCall();
-//            }
-//        });
-//        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//            }
-//        });
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
-//    }
 
-//    private void acceptCall() {
-//        isUserAcceptingCall = true;
-//        distressCallListView.setVisibility(View.GONE);
-//        // helpRequestsButton.setImageResource(R.drawable.not_selected);
-//        distressCallAdapter.clear();
-//        currentDistressCall.setAccepted(true);
-//        distressCallsRef.child(currentDistressCall.getId()).setValue(currentDistressCall);
-//        updateHelpRequestsCount();
-//        startPairing();
-//    }
-
-//    private void startPairing() {
-//        Toast.makeText(Navigation.this, "Pairing with the caller...", Toast.LENGTH_SHORT).show();
-//        // Implement your logic for pairing with the caller
-//        isPairingEnabled = true;
-//        startAcceptanceTimer();
-//    }
-
-//    private void startAcceptanceTimer() {
-//        acceptanceTimer = new CountDownTimer(ACCEPTANCE_TIMEOUT, 1000) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                // Update the timer display
-//                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
-//                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60;
-//                String timerText = String.format("%02d:%02d", minutes, seconds);
-//                showAcceptanceTimer(timerText);
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                isPairingEnabled = false;
-//                showNoUsersAvailableMessage();
-//                // Implement your logic for connecting with SafeWay volunteers for a video call
-//            }
-//        }.start();
-//    }
-
-//    private void showAcceptanceTimer(String timerText) {
-//        Toast.makeText(Navigation.this, "Acceptance timer: " + timerText, Toast.LENGTH_SHORT).show();
-//        // Update the UI with the acceptance timer
-//    }
-//
-//    private void showNoUsersAvailableMessage() {
-//        Toast.makeText(Navigation.this, "Unfortunately, no users are available", Toast.LENGTH_SHORT).show();
-//        // Implement your logic for connecting with SafeWay volunteers for a video call
-//    }
-//
-//    private void showCancelCallDialog(DistressCall distressCall) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(Navigation.this);
-//        builder.setTitle("Cancel Distress Call");
-//        builder.setMessage("Are you sure you want to cancel this distress call?");
-//        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                cancelCall(distressCall);
-//            }
-//        });
-//        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//            }
-//        });
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
-//    }
-//
-//    private void cancelCall(DistressCall distressCall) {
-//        distressCallsRef.child(distressCall.getId()).removeValue();
-//        Toast.makeText(Navigation.this, "Distress call canceled", Toast.LENGTH_SHORT).show();
-//    }
-//
-//    private void startDistressCallsCountdown() {
-//        // Implement your logic to update the count of distress calls available within 2km radius
-//    }
-
-//    private void updateHelpRequestsCount() {
-//        int distressCallCount = distressCalls.size();
-//        //        helpReqCounter.setText(String.valueOf(distressCallCount));
-//        // Implement your logic to update the user count in the radius
-//    }
-//
-//    private void hideDistressCalls() {
-//        distressCallListView.setVisibility(View.GONE);
-//        //helpRequestsButton.setImageResource(R.drawable.not_selected);
-//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -769,5 +692,22 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
 
         // Execute the AsyncTask
         directionsTask.execute(destinationLatLng);
+    }
+
+    private LatLng generateRandomLatLng(LatLng center, double radius) {
+        // Generate a random angle between 0 and 360 degrees
+        double randomAngle = Math.random() * 360;
+
+        // Convert the angle to radians
+        double radians = Math.toRadians(randomAngle);
+
+        // Calculate the random distance within the given radius
+        double randomDistance = Math.random() * radius;
+
+        // Calculate the new latitude and longitude using the random distance and angle
+        double latitude = center.latitude + (randomDistance / 111.32) * Math.cos(radians);
+        double longitude = center.longitude + (randomDistance / (111.32 * Math.cos(Math.toRadians(center.latitude)))) * Math.sin(radians);
+
+        return new LatLng(latitude, longitude);
     }
 }
