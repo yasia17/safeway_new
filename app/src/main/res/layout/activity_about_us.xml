@@ -1,20 +1,78 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="bottom|center_horizontal"
+    android:gravity="top|center_horizontal"
     android:background="@drawable/background">
 
-    <TextView
-        android:id="@+id/textView8"
+    <!-- Header Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Main Content -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Our Mission:
-At SafeWay, we are committed to empowering women and providing them with the tools they need to feel safer while walking alone. Our mission is to create a world where every woman can move freely without fear and anxiety.
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:gravity="center">
 
-Why SafeWay?
-Walking alone can be daunting, but with SafeWay, you're never truly alone. As women, we understand the concerns and challenges of walking alone, especially during vulnerable times. SafeWay is not just an app; it's a community that stands with you, ensuring your safety is never compromised." />
+        <!-- Logo ImageView -->
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            android:src="@drawable/logo" />
+
+        <!-- About Us Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="About Us"
+            android:gravity="center"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:textColor="@color/blue" />
+
+        <!-- About Us Description -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:lineSpacingExtra="5dp"
+            android:padding="5dp"
+            android:layout_margin="10dp"
+            android:text="@string/about_us"
+            android:textAlignment="center"
+            android:textColor="#333333"
+            android:textSize="21.5sp" />
+
+    </LinearLayout>
+
+    <!-- Footer Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Back Button -->
+    <Button
+        android:id="@+id/Back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/arrow_btn"
+        android:contentDescription="continue button"
+        android:fontFamily="@font/source_sans_pro"
+        android:padding="20dp" />
+
+    <!-- Bottom Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>

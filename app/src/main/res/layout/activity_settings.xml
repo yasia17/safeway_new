@@ -12,7 +12,7 @@
     <ImageButton
         android:id="@+id/NotificationsBtn"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="83dp"
         android:layout_weight="0"
         android:background="@drawable/notifications"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,13 +20,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.151"
+        app:layout_constraintVertical_bias="0.189"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/AboutBtn"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="83dp"
         android:layout_weight="0"
         android:background="@drawable/aboutus"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,13 +34,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NotificationsBtn"
-        app:layout_constraintVertical_bias="0.215"
+        app:layout_constraintVertical_bias="0.238"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/LogoutBtn"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="83dp"
         android:layout_marginBottom="68dp"
         android:layout_weight="0"
         android:background="@drawable/logout"
@@ -49,7 +49,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AboutBtn"
-        app:layout_constraintVertical_bias="0.811"
+        app:layout_constraintVertical_bias="0.723"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <LinearLayout

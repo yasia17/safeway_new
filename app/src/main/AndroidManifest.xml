@@ -41,6 +41,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDT9rZERLZVAegTvTmly1B3vmDmphQ8rI0" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name=".MainActivity3"
@@ -76,6 +79,9 @@
             android:exported="false" />
         <activity
             android:name=".Profile"
+            android:exported="false" />
+        <activity
+            android:name=".HelpList"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

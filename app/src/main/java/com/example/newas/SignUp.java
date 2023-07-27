@@ -43,7 +43,6 @@ public class SignUp extends AppCompatActivity {
         Fname = findViewById(R.id.Fname);
         Lname = findViewById(R.id.Lname);
         Age = findViewById(R.id.Age);
-//        Address = findViewById(R.id.Address);
         Email = findViewById(R.id.Email);
         Pass = findViewById(R.id.Pass);
         Button logIn = findViewById(R.id.linkToLogIn);
@@ -56,8 +55,7 @@ public class SignUp extends AppCompatActivity {
 
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SignUp.this, MainActivity.class);
+            public void onClick(View view) {Intent intent = new Intent(SignUp.this, Home.class);
                 startActivity(intent);
             }
         });
@@ -183,7 +181,7 @@ public class SignUp extends AppCompatActivity {
             case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     locationPermissionGranted = true;
-                    Intent intent = new Intent(SignUp.this, Navigation.class);
+                    Intent intent = new Intent(SignUp.this, Home.class);
                     startActivity(intent);
                 }
             }

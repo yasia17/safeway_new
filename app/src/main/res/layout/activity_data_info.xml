@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,73 +8,93 @@
     android:gravity="top|center_horizontal"
     android:background="@drawable/background">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1" />
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-
-
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0"
-            app:srcCompat="@drawable/logo" />
-
-    </LinearLayout>
 
     <TextView
+        android:id="@+id/dear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Safety"
-        android:gravity="center"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        android:textColor="@color/blue"
-        >
-    </TextView>
+        android:fontFamily="@font/barlow_extrabold"
+        android:gravity="center_horizontal"
+        android:text="Dear User,"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintVertical_bias="0.093" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+        android:id="@+id/dearuser"
+        android:layout_width="384dp"
+        android:layout_height="255dp"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="84dp"
+        android:fontFamily="@font/barlow_medium"
         android:lineSpacingExtra="5dp"
         android:padding="5dp"
-        android:layout_margin="10dp"
-        android:text="@string/security_message"
+        android:text="To ensure the utmost security and safeguard your interests,we kindly request the provision of necessary data including a photograph of yourself along with a valid identification document."
         android:textAlignment="center"
         android:textColor="#333333"
-        android:textSize="25dp" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1" />
+        android:textSize="23dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dear"
+        app:layout_constraintVertical_bias="0.284"
+        tools:ignore="UnknownId" />
 
     <Button
         android:id="@+id/Continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/arrow_btn"
         android:contentDescription="continue button"
         android:fontFamily="@font/source_sans_pro"
-        android:padding="20dp" />
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dearuser"
+        app:layout_constraintVertical_bias="0.491" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1" />
-</LinearLayout>
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="204dp"
+        android:layout_height="205dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.11"
+        app:srcCompat="@drawable/security_lock" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="49dp"
+        android:layout_height="42dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.124"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022"
+        app:srcCompat="@drawable/safeway" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

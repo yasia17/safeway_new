@@ -13,8 +13,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -26,12 +28,15 @@ public class Home extends AppCompatActivity {
     Button location_btn;
     Button profile_btn;
     Button walk_btn;
+
+    Button help_btn;
     private ListView list_view;
     private ArrayList<User> userArrayList;
     private ArrayAdapter<User> userArrayAdapter;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
-    private TextView hello_user;
+    private TextView helloUser;
+    private DatabaseReference usersRef;
 
 
     @Override
@@ -43,41 +48,38 @@ public class Home extends AppCompatActivity {
         location_btn = findViewById(R.id.location_btn);
         profile_btn = findViewById(R.id.profile_btn);
         walk_btn =findViewById(R.id.walk_btn);
-        hello_user = findViewById(R.id.hello_user);
+        helloUser = findViewById(R.id.hello_user);
+        help_btn = findViewById(R.id.help_btn);
 
-//        list initialize
-//        list_view = findViewById(R.id.list_view);
-//        userArrayList = new ArrayList<User>();
-//        userArrayAdapter = new ArrayAdapter<>(this, R.layout.custom_row, userArrayList);
-//        list_view.setAdapter(userArrayAdapter);
-//
-//        mAuth = FirebaseAuth.getInstance();
-//        database = FirebaseDatabase.getInstance();
-//
-//        Log.d("main", "before");
-//
-//        database.getReference("Users").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Log.d("main", "inside");
-//                userArrayList = new ArrayList<User>();
-//                for (DataSnapshot data:snapshot.getChildren()) {
-//                    User user = data.getValue(User.class);
-//                    userArrayList.add(user);
-//                }
-//                list_view = findViewById(R.id.list_view);
-//                userArrayAdapter = new UserArrayAdapter(Home.this, R.layout.custom_row, userArrayList);
-//                list_view.setAdapter(userArrayAdapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.d("main", "database error");
-//
-//            }
-//        });
 
-        //on click to profile
+        mAuth = FirebaseAuth.getInstance();
+
+        //getting the current user and their uid
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+
+        // Initialize the DatabaseReference to "Users" node
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+
+        // Read the user data from the database
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Deserialize the user data
+                User user = dataSnapshot.getValue(User.class);
+                if (user != null) {
+                    // Display the user's name in the TextView
+                    String name = user.getFirstName();
+                    helloUser.setText("Hello, " + name + "!");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle any errors that may occur
+            }
+        });
+
         profile_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +116,17 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        help_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Home.this, HelpList.class);
+                startActivity(i);
+            }
+        });
+
     }
+
+
 
 //    protected void onStart() {
 //        super.onStart();
