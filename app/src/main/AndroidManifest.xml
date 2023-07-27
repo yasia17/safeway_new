@@ -29,6 +29,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewAS">
         <activity
+            android:name=".Id_photo"
+            android:exported="false" />
+        <activity
+            android:name=".Face_photo"
+            android:exported="false" />
+        <activity
             android:name=".SOS"
             android:exported="false" />
         <activity

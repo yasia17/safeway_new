@@ -9,9 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
-import androidx.annotation.NonNull;
-import android.graphics.Color;
-
 
 
 public class Data_info extends AppCompatActivity {
@@ -55,7 +52,7 @@ public class Data_info extends AppCompatActivity {
         cont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Data_info.this, MainActivity2.class);
+                Intent i = new Intent(Data_info.this, Face_photo.class);
                 startActivity(i);
             }
         });

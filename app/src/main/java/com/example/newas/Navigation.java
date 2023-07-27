@@ -432,7 +432,7 @@ public class Navigation extends AppCompatActivity implements OnMapReadyCallback 
                 .position(latLng)
                 .title(destination)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-        Toast.makeText(Navigation.this,latLng.toString() , Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Navigation.this,latLng.toString() , Toast.LENGTH_SHORT).show();
     }
 
     private void showMeetingPoint(LatLng latLng) {

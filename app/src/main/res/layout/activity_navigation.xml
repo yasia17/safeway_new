@@ -40,6 +40,7 @@
             android:layout_height="100dp"
             android:layout_gravity="bottom|start"
             android:layout_margin="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/button_background"
             android:scaleType="fitCenter"
             android:contentDescription="sos btn"
