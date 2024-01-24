@@ -76,7 +76,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:background="@color/Turquoise"
+                android:background="@color/lavender"
                 android:layout_margin="20dp"
                 android:id="@+id/callMom"
                 android:orientation="horizontal"
@@ -112,7 +112,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:background="@color/Turquoise"
+                android:background="@color/lavender"
                 android:layout_margin="20dp"
                 android:orientation="horizontal"
                 android:id="@+id/callSis"
@@ -147,7 +147,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:background="@color/Turquoise"
+                android:background="@color/lavender"
                 android:layout_margin="20dp"
                 android:orientation="horizontal"
                 android:id="@+id/callFriend"

@@ -16,6 +16,7 @@ public class Face_photo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_photo);
 
+
         next_page = findViewById(R.id.next_page);
 
         next_page.setOnClickListener(new View.OnClickListener() {

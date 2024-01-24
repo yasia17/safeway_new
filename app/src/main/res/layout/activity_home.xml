@@ -11,19 +11,19 @@
 
     <!--    the down pannel-->
 
+
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="148dp"
+        android:layout_height="64dp"
         android:layout_weight="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/hello_user"
-        app:layout_constraintHorizontal_bias="0.202"
+        app:layout_constraintHorizontal_bias="0.403"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.019"
         app:srcCompat="@drawable/logo" />
-
 
     <Button
         android:id="@+id/walk_btn"
@@ -71,7 +71,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.998">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
         <!-- filler -->
         <View
             android:layout_width="0dp"
@@ -141,23 +142,10 @@
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/woman"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.899"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.432" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.652"
-        app:layout_constraintStart_toEndOf="@+id/hello_user"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.029"
-        app:srcCompat="@drawable/safeway" />
-
-
+        app:layout_constraintVertical_bias="0.551" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
