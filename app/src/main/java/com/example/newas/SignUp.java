@@ -70,6 +70,7 @@ public class SignUp extends AppCompatActivity {
                         CreateUser(Email.getText().toString(), Pass.getText().toString());
                         System.out.println("after create");
                         Log.d("main", "after create signup");
+
                     } else {
                         PermissionHelper.requestLocationPermission(SignUp.this);
                     }

@@ -29,6 +29,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewAS">
         <activity
+            android:name=".Users_near"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".Id_photo"
             android:exported="false" />
         <activity
@@ -90,7 +96,7 @@
             android:name=".HelpList"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Splash_screen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
