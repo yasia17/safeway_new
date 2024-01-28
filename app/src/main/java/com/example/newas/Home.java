@@ -30,6 +30,7 @@ public class Home extends AppCompatActivity {
     Button walk_btn;
 
     Button help_btn;
+    Button users_active;
     private ListView list_view;
     private ArrayList<User> userArrayList;
     private ArrayAdapter<User> userArrayAdapter;
@@ -50,6 +51,7 @@ public class Home extends AppCompatActivity {
         walk_btn =findViewById(R.id.walk_btn);
         helloUser = findViewById(R.id.hello_user);
         help_btn = findViewById(R.id.help_btn);
+        users_active = findViewById(R.id.active_users);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -77,6 +79,14 @@ public class Home extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle any errors that may occur
+            }
+        });
+
+        users_active.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Home.this, Users_near.class);
+                startActivity(i);
             }
         });
 

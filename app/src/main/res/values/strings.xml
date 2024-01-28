@@ -16,11 +16,8 @@ of necessary data including a
  with a valid identification
 document.    </string>
 
-    <string name="about_us">Our Mission:
-At SafeWay, we are committed to empowering women and providing them with the tools they need to feel safer while walking alone. Our mission is to create a world where every woman can move freely without fear and anxiety.
-
-Why SafeWay?
-Walking alone can be daunting, but with SafeWay, you\'re never truly alone. As women, we understand the concerns and challenges of walking alone, especially during vulnerable times. SafeWay is not just an app; it\'s a community that stands with you, ensuring your safety is never compromised.
+    <string name="about_us" font="@font/cocogoose">
+        Cool app fr, connect with your UniMates
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

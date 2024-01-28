@@ -23,7 +23,7 @@
         <!-- Logo ImageView -->
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="130dp"
+            android:layout_width="207dp"
             android:layout_height="130dp"
             android:layout_gravity="center"
             android:src="@drawable/logo" />
@@ -36,7 +36,7 @@
             android:gravity="center"
             android:textSize="35sp"
             android:textStyle="bold"
-            android:textColor="@color/blue" />
+            android:textColor="@color/lavender" />
 
         <!-- About Us Description -->
         <TextView
