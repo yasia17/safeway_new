@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "541915192738",
+    "firebase_url": "https://unimate420-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "unimate420",
+    "storage_bucket": "unimate420.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541915192738:android:7a337adb2c212a3d13a6fb",
+        "android_client_info": {
+          "package_name": "com.example.newas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8UmbjS7OtxF87WevJqWQEFCcooYv5IjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

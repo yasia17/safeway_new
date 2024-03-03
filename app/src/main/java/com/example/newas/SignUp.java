@@ -65,11 +65,7 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
                 if (CheckSignUp()) {
                     if (PermissionHelper.checkLocationPermission(SignUp.this)) {
-                        System.out.println("before create");
-                        Log.d("main", "before create signup");
                         CreateUser(Email.getText().toString(), Pass.getText().toString());
-                        System.out.println("after create");
-                        Log.d("main", "after create signup");
 
                     } else {
                         PermissionHelper.requestLocationPermission(SignUp.this);
@@ -83,7 +79,6 @@ public class SignUp extends AppCompatActivity {
         String fname = String.valueOf(Fname.getText());
         String lname = String.valueOf(Lname.getText());
         Integer age = Integer.valueOf(String.valueOf(Age.getText()));
-//        String address = String.valueOf(Address.getText());
         String email = String.valueOf(Email.getText());
         String pass = String.valueOf(Pass.getText());
 
@@ -159,7 +154,7 @@ public class SignUp extends AppCompatActivity {
 
                             String uid = mAuth.getCurrentUser().getUid().toString();
 
-                            db.getInstance("https://safewaymap-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(uid).setValue(user);
+                            db.getInstance("https://unimate420-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(uid).setValue(user);
 
                             System.out.println("here create user");
 
